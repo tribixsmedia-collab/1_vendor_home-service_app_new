@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
+import '../utils/legal_links.dart';
 import 'bank_account_screen.dart';
 import 'location_settings_screen.dart';
 import 'login_screen.dart';
@@ -213,6 +214,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _buildLocationCard(),
                   const SizedBox(height: 16),
                   _buildSupportCard(),
+                  const SizedBox(height: 16),
+                  _buildLegalCard(),
                   const SizedBox(height: 24),
                   OutlinedButton.icon(
                     onPressed: _logout,
@@ -627,6 +630,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
           MaterialPageRoute(builder: (_) => const SupportScreen()),
         ),
       ),
+    );
+  }
+
+  /// Terms, privacy and account deletion.
+  ///
+  /// Google Play requires the privacy policy and a way to request account
+  /// deletion to be reachable from inside the app, not only from the store
+  /// listing. They open in a browser rather than a WebView so the address bar
+  /// shows the real domain -- a policy page that could be anything is worth
+  /// less than one the reader can verify.
+  Widget _buildLegalCard() {
+    return _card(
+      padding: EdgeInsets.zero,
+      child: Column(
+        children: [
+          _legalRow(
+            Icons.description_outlined,
+            'Terms of Service',
+            LegalLinks.terms,
+          ),
+          const Divider(height: 1, indent: 56),
+          _legalRow(
+            Icons.privacy_tip_outlined,
+            'Privacy Policy',
+            LegalLinks.privacy,
+          ),
+          const Divider(height: 1, indent: 56),
+          _legalRow(
+            Icons.delete_outline_rounded,
+            'Delete my account',
+            LegalLinks.dataDeletion,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _legalRow(IconData icon, String label, String url) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+      leading: Icon(icon, color: Colors.grey.shade700),
+      title: Text(
+        label,
+        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+      ),
+      trailing: const Icon(Icons.open_in_new, size: 18),
+      onTap: () => LegalLinks.open(context, url),
     );
   }
 

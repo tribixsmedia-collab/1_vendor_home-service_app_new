@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../firebase_options.dart';
 import '../main.dart';
 import '../screens/notification_screen.dart';
 import 'api_service.dart';
@@ -20,13 +19,38 @@ class PushService {
 
   static bool _initialised = false;
 
+  /// Paste the Web Push certificate key pair here once a Firebase Web app
+  /// exists. Until then web push stays off and the rest of the app is
+  /// unaffected.
+  static const String webVapidKey = '';
+
+  /// Firebase is only wired up on Android and iOS. On the web it needs a
+  /// registered Web app and a VAPID key, neither of which exists yet -- and
+  /// calling into it without them throws at startup and leaves a blank page.
+  /// Every caller below returns early rather than letting that happen.
+  static bool get isSupported =>
+      !kIsWeb || (DefaultFirebaseOptions.webConfigured && webVapidKey.isNotEmpty);
+
+  static bool get _isIOS =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
+  static String get _platformName {
+    if (kIsWeb) return 'WEB';
+    return _isIOS ? 'IOS' : 'ANDROID';
+  }
+
   // -------------------------------------------------------------------- init
   /// Call once from main(), after Firebase.initializeApp().
   static Future<void> init() async {
+    if (!isSupported) return;
     if (_initialised) return;
     _initialised = true;
 
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    // Web delivers background messages through a service worker, not a Dart
+    // entry point, and registering this there throws.
+    if (!kIsWeb) {
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    }
 
     await _requestPermission();
 
@@ -47,7 +71,7 @@ class PushService {
       if (await ApiService.isLoggedIn()) {
         await NotificationService.instance.registerDevice(
           token: token,
-          platform: Platform.isIOS ? 'IOS' : 'ANDROID',
+          platform: _platformName,
         );
       }
     });
@@ -59,7 +83,7 @@ class PushService {
       badge: true,
       sound: true,
     );
-    if (Platform.isIOS) {
+    if (_isIOS) {
       await FirebaseMessaging.instance
           .setForegroundNotificationPresentationOptions(
             alert: false,
@@ -75,7 +99,7 @@ class PushService {
   /// away, which is why this never shows up in Android testing — on iPhone it
   /// meant the device was never registered and no push ever arrived.
   static Future<bool> _apnsReady() async {
-    if (!Platform.isIOS) return true;
+    if (!_isIOS) return true;
     for (var attempt = 0; attempt < 10; attempt++) {
       final apns = await FirebaseMessaging.instance.getAPNSToken();
       if (apns != null && apns.isNotEmpty) return true;
@@ -88,6 +112,7 @@ class PushService {
   // ------------------------------------------------------------------ tokens
   /// Call after login, and on startup when already logged in.
   static Future<void> registerToken() async {
+    if (!isSupported) return;
     debugPrint('registerToken() called');
 
     try {
@@ -101,7 +126,7 @@ class PushService {
 
       await NotificationService.instance.registerDevice(
         token: token,
-        platform: Platform.isIOS ? 'IOS' : 'ANDROID',
+        platform: _platformName,
       );
 
       debugPrint('FCM token registered: ${token.substring(0, 20)}…');
@@ -112,6 +137,7 @@ class PushService {
 
   /// Call from logout, before the JWT is cleared.
   static Future<void> unregisterToken() async {
+    if (!isSupported) return;
     try {
       final token = await FirebaseMessaging.instance.getToken();
       if (token != null) {

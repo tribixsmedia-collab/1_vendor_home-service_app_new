@@ -53,3 +53,6 @@ key.properties
 android/key.properties
 *.jks
 *.keystore
+
+# Built by build_web.sh for upload; not source.
+homeservice-vendor.tar.gz

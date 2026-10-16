@@ -11,7 +11,15 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // Only where Firebase is actually configured. On the web there is no
+  // registered Web app yet, and DefaultFirebaseOptions.currentPlatform throws
+  // for web -- unguarded, that kills main() before anything is drawn and the
+  // browser shows a blank white page with no clue why.
+  if (PushService.isSupported) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
   await PushService.init();
 
   // Cached branding first so the login screen paints the right logo

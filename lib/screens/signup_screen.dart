@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -54,9 +53,9 @@ class _SignupScreenState extends State<SignupScreen> {
   int? _selectedPlanId;
   bool _loadingPlans = true;
 
-  File? _idProof;
-  File? _addressProof;
-  File? _tradeCertificate;
+  XFile? _idProof;
+  XFile? _addressProof;
+  XFile? _tradeCertificate;
 
   double? _latitude;
   double? _longitude;
@@ -141,7 +140,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return null;
   }
 
-  Future<void> _pickDocument(void Function(File) onPicked) async {
+  Future<void> _pickDocument(void Function(XFile) onPicked) async {
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
       builder: (ctx) => SafeArea(
@@ -168,7 +167,7 @@ class _SignupScreenState extends State<SignupScreen> {
       source: source,
       imageQuality: 80,
     );
-    if (picked != null) setState(() => onPicked(File(picked.path)));
+    if (picked != null) setState(() => onPicked(picked));
   }
 
   Future<void> _captureLocation() async {
@@ -423,8 +422,8 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _documentTile({
     required String label,
     required String subtitle,
-    required File? file,
-    required void Function(File) onPicked,
+    required XFile? file,
+    required void Function(XFile) onPicked,
     required VoidCallback onCleared,
   }) {
     return Card(
@@ -443,7 +442,7 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
         title: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(
-          file != null ? file.path.split(Platform.pathSeparator).last : subtitle,
+          file != null ? file.name : subtitle,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),

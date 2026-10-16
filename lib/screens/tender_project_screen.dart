@@ -1,8 +1,9 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../widgets/picked_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../services/api_service.dart';
@@ -598,7 +599,7 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
 class _ProgressDraft {
   final String message;
   final int? percentComplete;
-  final List<File> images;
+  final List<XFile> images;
 
   const _ProgressDraft({
     required this.message,
@@ -619,7 +620,7 @@ class _ProgressSheet extends StatefulWidget {
 class _ProgressSheetState extends State<_ProgressSheet> {
   final _message = TextEditingController();
   final _percent = TextEditingController();
-  final List<File> _images = [];
+  final List<XFile> _images = [];
 
   @override
   void dispose() {
@@ -635,12 +636,12 @@ class _ProgressSheetState extends State<_ProgressSheet> {
         source: ImageSource.camera,
         imageQuality: 80,
       );
-      if (shot != null) setState(() => _images.add(File(shot.path)));
+      if (shot != null) setState(() => _images.add(shot));
       return;
     }
     final picked = await picker.pickMultiImage(imageQuality: 80);
     if (picked.isNotEmpty) {
-      setState(() => _images.addAll(picked.map((x) => File(x.path))));
+      setState(() => _images.addAll(picked));
     }
   }
 
@@ -715,11 +716,10 @@ class _ProgressSheetState extends State<_ProgressSheet> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.file(
+                          child: PickedImage(
                             _images[index],
                             width: 72,
                             height: 72,
-                            fit: BoxFit.cover,
                           ),
                         ),
                         Positioned(

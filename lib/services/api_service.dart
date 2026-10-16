@@ -186,7 +186,7 @@
 
 //   static Future<void> uploadStartPhoto({
 //     required int bookingId,
-//     required File imageFile,
+//     required XFile imageFile,
 //     required double latitude,
 //     required double longitude,
 //   }) async {
@@ -199,7 +199,7 @@
 //       request.fields['latitude'] = latitude.toStringAsFixed(6);
 //       request.fields['longitude'] = longitude.toStringAsFixed(6);
 //       request.files.add(
-//         await http.MultipartFile.fromPath('image', imageFile.path),
+//         await _filePart('image', imageFile),
 //       );
 //       final streamed = await request.send();
 //       return http.Response.fromStream(streamed);
@@ -273,8 +273,8 @@
 //   }
 // }
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config.dart';
 import 'package:flutter/material.dart';
@@ -299,6 +299,20 @@ class VendorNotApprovedException implements Exception {
 }
 
 class ApiService {
+  /// Build a multipart part from a picked file.
+  ///
+  /// `MultipartFile.fromPath` reads from the filesystem. The web does not have
+  /// one -- an XFile there wraps a blob and its `path` is not a real path, so
+  /// fromPath fails at runtime while compiling perfectly happily. Reading the
+  /// bytes works the same on every platform.
+  static Future<http.MultipartFile> _filePart(String field, XFile file) async {
+    return http.MultipartFile.fromBytes(
+      field,
+      await file.readAsBytes(),
+      filename: file.name,
+    );
+  }
+
   static const _tokenKey = 'access_token';
   static const _refreshKey = 'refresh_token';
 
@@ -420,9 +434,9 @@ class ApiService {
     List<String> serviceStates = const [],
     double? latitude,
     double? longitude,
-    required File idProof,
-    File? addressProof,
-    File? tradeCertificate,
+    required XFile idProof,
+    XFile? addressProof,
+    XFile? tradeCertificate,
     int? planId,
   }) async {
     final request = http.MultipartRequest(
@@ -457,19 +471,16 @@ class ApiService {
     });
 
     request.files.add(
-      await http.MultipartFile.fromPath('id_proof', idProof.path),
+      await _filePart('id_proof', idProof),
     );
     if (addressProof != null) {
       request.files.add(
-        await http.MultipartFile.fromPath('address_proof', addressProof.path),
+        await _filePart('address_proof', addressProof),
       );
     }
     if (tradeCertificate != null) {
       request.files.add(
-        await http.MultipartFile.fromPath(
-          'trade_certificate',
-          tradeCertificate.path,
-        ),
+        await _filePart('trade_certificate', tradeCertificate),
       );
     }
 
@@ -600,7 +611,7 @@ class ApiService {
 
   static Future<void> uploadStartPhoto({
     required int bookingId,
-    required File imageFile,
+    required XFile imageFile,
     required double latitude,
     required double longitude,
   }) async {
@@ -613,7 +624,7 @@ class ApiService {
       request.fields['latitude'] = latitude.toStringAsFixed(6);
       request.fields['longitude'] = longitude.toStringAsFixed(6);
       request.files.add(
-        await http.MultipartFile.fromPath('image', imageFile.path),
+        await _filePart('image', imageFile),
       );
       final streamed = await request.send();
       return http.Response.fromStream(streamed);
@@ -973,7 +984,7 @@ class ApiService {
     required int tenderId,
     required String message,
     int? percentComplete,
-    List<File> images = const [],
+    List<XFile> images = const [],
   }) async {
     final uri = Uri.parse('$kApiBaseUrl/tenders/$tenderId/progress/add/');
 
@@ -987,7 +998,7 @@ class ApiService {
       }
       for (final image in images) {
         request.files.add(
-          await http.MultipartFile.fromPath('images', image.path),
+          await _filePart('images', image),
         );
       }
       return http.Response.fromStream(await request.send());

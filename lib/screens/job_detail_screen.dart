@@ -1,9 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geocoding/geocoding.dart';
+
+import '../widgets/picked_image.dart';
 import '../services/api_service.dart';
 import '../widgets/slide_action.dart';
 
@@ -25,7 +26,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
   late Map<String, dynamic> _job;
   bool _isProcessing = false;
   String? _statusMessage;
-  File? _capturedImage;
+  XFile? _capturedImage;
   String? _convertedAddress;
   bool _isLoadingAddress = false;
 
@@ -119,7 +120,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       }
 
       setState(() {
-        _capturedImage = File(photo.path);
+        _capturedImage = photo;
         _statusMessage = 'Getting your location...';
       });
 
@@ -128,7 +129,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       setState(() => _statusMessage = 'Uploading...');
       await ApiService.uploadStartPhoto(
         bookingId: _job['id'],
-        imageFile: File(photo.path),
+        imageFile: photo,
         latitude: position.latitude,
         longitude: position.longitude,
       );
@@ -500,11 +501,10 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       icon: Icons.photo_camera_outlined,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: Image.file(
+        child: PickedImage(
           _capturedImage!,
           height: 200,
           width: double.infinity,
-          fit: BoxFit.cover,
         ),
       ),
     );

@@ -15,11 +15,25 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
+  /// Flip to `true` once a **Web** app exists in the Firebase console
+  /// (Project settings -> Your apps -> Web), its values are pasted into [web]
+  /// below, and the Web Push certificate key pair is in
+  /// `PushService.webVapidKey`.
+  ///
+  /// While this is `false` the vendor web build simply runs without Firebase.
+  /// Jobs, bookings, earnings and every other API-backed screen still work,
+  /// because those come from our own Django backend. Only browser push
+  /// notifications are off -- a browser tab cannot receive them reliably
+  /// anyway, so this is not the loss it sounds like.
+  static const bool webConfigured = false;
+
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
+      if (webConfigured) return web;
       throw UnsupportedError(
         'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
+        'set DefaultFirebaseOptions.webConfigured to true after filling in '
+        'the web options below.',
       );
     }
     switch (defaultTargetPlatform) {
@@ -70,5 +84,16 @@ class DefaultFirebaseOptions {
     projectId: 'rni-home-services',
     storageBucket: 'rni-home-services.firebasestorage.app',
     iosBundleId: 'com.rniservices.vendor',
+  );
+
+  /// Placeholder. Fill these in from the Firebase console's Web app and set
+  /// [webConfigured] to true. Unused while that flag is false.
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'PASTE_WEB_API_KEY',
+    appId: 'PASTE_WEB_APP_ID',
+    messagingSenderId: '392326867102',
+    projectId: 'rni-home-services',
+    authDomain: 'rni-home-services.firebaseapp.com',
+    storageBucket: 'rni-home-services.firebasestorage.app',
   );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'services/api_service.dart';
@@ -42,7 +43,7 @@ class VendorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'RNI Services - Vendor',
+      title: kAppName,
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
       navigatorKey: navigatorKey,

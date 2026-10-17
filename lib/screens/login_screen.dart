@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../config.dart';
 import '../theme.dart';
 import '../services/api_service.dart';
 import '../services/branding_service.dart';
@@ -163,10 +164,10 @@ class _LoginScreenState extends State<LoginScreen>
                                 builder: (context) => Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const AppLogo(),
+                                    const AppLogo(size: 76),
                                     const SizedBox(height: 20),
                                     Text(
-                                      BrandingService.appName ?? 'Vendor Login',
+                                      BrandingService.appName ?? kAppName,
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme

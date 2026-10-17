@@ -20,8 +20,9 @@ class BrandingBuilder extends StatelessWidget {
 }
 
 /// The vendor app's logo. Shows whatever the admin uploaded, falling back to
-/// the built-in engineering icon when nothing is set, the image fails to
-/// load, or the device is offline before its first successful fetch.
+/// the bundled logo when nothing is set, the image fails to load, or the
+/// device is offline before its first successful fetch. No branding record
+/// exists today, so the bundled one is what actually shows.
 class AppLogo extends StatelessWidget {
   final double size;
 
@@ -57,13 +58,27 @@ class AppLogo extends StatelessWidget {
   }
 
   Widget _fallback() {
+    final logo = Image.asset(
+      'assets/logo.png',
+      width: size,
+      height: size,
+      fit: BoxFit.contain,
+    );
+
+    // Uncropped where the caller asked for it -- the splash shows the full
+    // mark. Elsewhere it sits on a tinted disc, which is what the circular
+    // flag is really asking for: an avatar-shaped badge, not a cropped logo.
+    if (!circular) return logo;
+
     return Container(
-      padding: const EdgeInsets.all(16),
+      // Tight on purpose. This mark is three interlocking shapes, and it goes
+      // muddy once it is scaled down much past the size the caller asked for.
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
+        color: AppColors.primary.withValues(alpha: 0.08),
         shape: BoxShape.circle,
       ),
-      child: Icon(Icons.engineering, size: size, color: AppColors.primary),
+      child: logo,
     );
   }
 }

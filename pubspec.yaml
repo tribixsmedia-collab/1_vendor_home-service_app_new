@@ -71,6 +71,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/logo.png
+
   # Brand typefaces, matched to the RNI Realestate web identity and kept in
   # step with the customer app: Manrope for every UI/body string, Playfair
   # Display for display headings. Bundled rather than fetched at runtime so

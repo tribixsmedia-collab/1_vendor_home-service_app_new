@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 import '../services/api_service.dart';
 import '../services/branding_service.dart';
@@ -13,11 +14,11 @@ import 'support_screen.dart';
 import 'tenders_screen.dart';
 
 /// The vendor app's accent, matching the login, jobs list and job detail
-/// screens. Literal rather than `colorScheme.primary`, because the Material 3
-/// scheme generated from the deepOrange seed comes out noticeably muted.
-const Color _accent = Colors.deepOrange;
-const Color _bg = Color(0xFFF6F6F8);
-const Color _border = Color(0xFFEDEDF2);
+/// screens. Taken from the shared palette rather than
+/// `Theme.of(context).colorScheme`, so these stay `const`.
+const Color _accent = AppColors.primary;
+const Color _bg = AppColors.background;
+const Color _border = AppColors.border;
 
 /// One day's completed-job count, for the week strip.
 class _DayCount {
@@ -424,7 +425,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: Colors.black87,
+                color: AppColors.textDark,
               ),
             ),
             const SizedBox(height: 6),
@@ -434,7 +435,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               style: TextStyle(
                 fontSize: 13.5,
                 height: 1.4,
-                color: Colors.grey.shade600,
+                color: AppColors.textGrey,
               ),
             ),
             const SizedBox(height: 18),
@@ -463,7 +464,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             children: [
               InkWell(
-                borderRadius: BorderRadius.circular(28),
+                borderRadius: BorderRadius.circular(999),
                 onTap: () => _openThenReload(const ProfileScreen()),
                 child: Container(
                   height: 54,
@@ -492,7 +493,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       _greeting,
                       style: TextStyle(
                         fontSize: 12.5,
-                        color: Colors.grey.shade600,
+                        color: AppColors.textGrey,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -503,7 +504,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       style: const TextStyle(
                         fontSize: 19,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        color: AppColors.textDark,
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -514,7 +515,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.grey.shade600,
+                          color: AppColors.textGrey,
                         ),
                       ),
                     ),
@@ -535,7 +536,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Icon(
                 isAvailable ? Icons.work_outline : Icons.work_off_outlined,
                 size: 20,
-                color: isAvailable ? Colors.green.shade700 : Colors.grey,
+                color: isAvailable ? AppColors.success : AppColors.textGrey,
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -556,7 +557,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           : 'Turn this on when you are back on duty.',
                       style: TextStyle(
                         fontSize: 11.5,
-                        color: Colors.grey.shade600,
+                        color: AppColors.textGrey,
                       ),
                     ),
                   ],
@@ -611,7 +612,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               : Icons.pending_outlined,
           color: status == 'REJECTED'
               ? Colors.red.shade600
-              : Colors.orange.shade800,
+              : AppColors.accentDark,
           title: status == 'REJECTED'
               ? 'Your account is not verified'
               : 'Verification pending',
@@ -626,7 +627,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       alerts.add(
         _alert(
           icon: Icons.location_off_outlined,
-          color: Colors.orange.shade800,
+          color: AppColors.accentDark,
           title: 'Work location not set',
           message: 'Set it so you get matched with jobs near you.',
           onTap: () => _openThenReload(const LocationSettingsScreen()),
@@ -648,14 +649,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       padding: const EdgeInsets.only(top: 12),
       child: Material(
         color: color.withValues(alpha: 0.07),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         child: InkWell(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(12),
           onTap: onTap,
           child: Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(color: color.withValues(alpha: 0.25)),
             ),
             child: Row(
@@ -680,7 +681,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         style: TextStyle(
                           fontSize: 11.5,
                           height: 1.3,
-                          color: Colors.grey.shade700,
+                          color: AppColors.textBody,
                         ),
                       ),
                     ],
@@ -706,7 +707,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Expanded(
           child: _statTile(
             icon: Icons.handyman_outlined,
-            color: Colors.purple.shade600,
+            color: AppColors.primaryMid,
             value: '${_activeJobs.length}',
             label: 'Active jobs',
             onTap: () => _openThenReload(const JobsListScreen()),
@@ -716,7 +717,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Expanded(
           child: _statTile(
             icon: Icons.today_outlined,
-            color: Colors.blue.shade700,
+            color: AppColors.info,
             value: '${_todayJobs.length}',
             label: 'Due today',
             onTap: () => _openThenReload(const JobsListScreen()),
@@ -748,7 +749,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: _border),
       ),
       child: Column(
@@ -768,7 +769,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
-                color: Colors.black87,
+                color: AppColors.textDark,
               ),
             ),
           ),
@@ -781,7 +782,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             style: TextStyle(
               fontSize: 11,
               height: 1.25,
-              color: Colors.grey.shade600,
+              color: AppColors.textGrey,
             ),
           ),
         ],
@@ -793,7 +794,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         onTap: onTap,
         child: content,
       ),
@@ -819,7 +820,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const Spacer(),
               Text(
                 '${_months[now.month - 1]} ${now.year}',
-                style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                style: TextStyle(fontSize: 12, color: AppColors.textGrey),
               ),
             ],
           ),
@@ -835,7 +836,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       'Completed job value',
                       style: TextStyle(
                         fontSize: 11.5,
-                        color: Colors.grey.shade600,
+                        color: AppColors.textGrey,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -845,7 +846,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         style: const TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black87,
+                          color: AppColors.textDark,
                         ),
                       ),
                     ),
@@ -859,8 +860,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.green.shade700.withValues(alpha: 0.09),
-                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.success.withValues(alpha: 0.09),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
                   children: [
@@ -869,14 +870,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
-                        color: Colors.green.shade700,
+                        color: AppColors.success,
                       ),
                     ),
                     Text(
                       done == 1 ? 'job done' : 'jobs done',
                       style: TextStyle(
                         fontSize: 10.5,
-                        color: Colors.green.shade700,
+                        color: AppColors.success,
                       ),
                     ),
                   ],
@@ -892,7 +893,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Icon(
                   Icons.account_balance_wallet_outlined,
                   size: 16,
-                  color: Colors.orange.shade800,
+                  color: AppColors.accentDark,
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -900,7 +901,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     '${_amount(pending)} still marked unpaid across your jobs',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.orange.shade800,
+                      color: AppColors.accentDark,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -915,7 +916,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           Text(
             'Jobs completed · last 7 days',
-            style: TextStyle(fontSize: 11.5, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 11.5, color: AppColors.textGrey),
           ),
           const SizedBox(height: 10),
           _weekChart(),
@@ -956,8 +957,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   fontSize: 10.5,
                   fontWeight: FontWeight.w700,
                   color: day.count == 0
-                      ? Colors.grey.shade400
-                      : Colors.grey.shade700,
+                      ? AppColors.textMuted
+                      : AppColors.textBody,
                 ),
               ),
               const SizedBox(height: 4),
@@ -968,7 +969,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   color: day.count == 0
                       ? _border
                       : _accent.withValues(alpha: isToday ? 1 : 0.45),
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(6),
                 ),
               ),
               const SizedBox(height: 6),
@@ -977,7 +978,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 style: TextStyle(
                   fontSize: 10.5,
                   fontWeight: isToday ? FontWeight.w700 : FontWeight.w400,
-                  color: isToday ? _accent : Colors.grey.shade600,
+                  color: isToday ? _accent : AppColors.textGrey,
                 ),
               ),
             ],
@@ -1029,7 +1030,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Icon(
                   Icons.event_available_outlined,
                   size: 18,
-                  color: Colors.grey.shade500,
+                  color: AppColors.textMuted,
                 ),
                 const SizedBox(width: 10),
                 Expanded(
@@ -1037,7 +1038,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     'Nothing scheduled for today.',
                     style: TextStyle(
                       fontSize: 13.5,
-                      color: Colors.grey.shade600,
+                      color: AppColors.textGrey,
                     ),
                   ),
                 ),
@@ -1047,7 +1048,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 16),
               Text(
                 'Next up · ${_shortDate(_parseDate(next['preferred_date'])!)}',
-                style: TextStyle(fontSize: 11.5, color: Colors.grey.shade600),
+                style: TextStyle(fontSize: 11.5, color: AppColors.textGrey),
               ),
               const SizedBox(height: 10),
               _jobRow(next),
@@ -1090,7 +1091,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         style: const TextStyle(
                           fontSize: 12.5,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black87,
+                          color: AppColors.textDark,
                         ),
                       ),
                       if (time.length > 1)
@@ -1098,7 +1099,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           time.last,
                           style: TextStyle(
                             fontSize: 9.5,
-                            color: Colors.grey.shade600,
+                            color: AppColors.textGrey,
                           ),
                         ),
                     ],
@@ -1119,7 +1120,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black87,
+                                color: AppColors.textDark,
                               ),
                             ),
                           ),
@@ -1131,7 +1132,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.purple.shade600.withValues(
+                                color: AppColors.primaryMid.withValues(
                                   alpha: 0.12,
                                 ),
                                 borderRadius: BorderRadius.circular(6),
@@ -1141,7 +1142,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 style: TextStyle(
                                   fontSize: 9.5,
                                   fontWeight: FontWeight.w700,
-                                  color: Colors.purple.shade600,
+                                  color: AppColors.primaryMid,
                                 ),
                               ),
                             ),
@@ -1157,7 +1158,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 11.5,
-                          color: Colors.grey.shade600,
+                          color: AppColors.textGrey,
                         ),
                       ),
                     ],
@@ -1166,7 +1167,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Icon(
                   Icons.chevron_right,
                   size: 18,
-                  color: Colors.grey.shade500,
+                  color: AppColors.textMuted,
                 ),
               ],
             ),
@@ -1266,7 +1267,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+                    color: AppColors.textDark,
                   ),
                 ),
               ),
@@ -1284,7 +1285,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       padding: padding ?? const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: _border),
       ),
       child: child,

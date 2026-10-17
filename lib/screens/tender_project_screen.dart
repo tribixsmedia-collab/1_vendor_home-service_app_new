@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -210,13 +211,13 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
                       Icon(
                         Icons.cloud_off_outlined,
                         size: 48,
-                        color: Colors.grey.shade400,
+                        color: AppColors.textMuted,
                       ),
                       const SizedBox(height: 12),
                       Text(
                         _errorMessage!,
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.grey.shade600),
+                        style: TextStyle(color: AppColors.textGrey),
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
@@ -309,12 +310,12 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
               const SizedBox(height: 6),
               Text(
                 '${tender['address_text'] ?? ''}',
-                style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+                style: TextStyle(fontSize: 13, color: AppColors.textBody),
               ),
               if ('${tender['location_label'] ?? ''}'.isNotEmpty)
                 Text(
                   '${tender['location_label']}',
-                  style: TextStyle(fontSize: 12.5, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 12.5, color: AppColors.textGrey),
                 ),
               if ('${tender['customer_phone'] ?? ''}'.isNotEmpty) ...[
                 const SizedBox(height: 12),
@@ -373,7 +374,7 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
             icon: const Icon(Icons.check_circle_outline_rounded),
             label: const Text('Mark project complete'),
             style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.green.shade700,
+              foregroundColor: AppColors.success,
               side: BorderSide(color: Colors.green.shade400),
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
@@ -417,10 +418,10 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
     final isReached = milestoneStatus == 'REACHED';
 
     final color = isPaid
-        ? Colors.green.shade700
+        ? AppColors.success
         : isReached
         ? Colors.orange.shade700
-        : Colors.grey.shade500;
+        : AppColors.textMuted;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -505,7 +506,7 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
                     tenderDateTime(update['created_at']),
                     style: TextStyle(
                       fontSize: 11.5,
-                      color: Colors.grey.shade600,
+                      color: AppColors.textGrey,
                     ),
                   ),
                 ),
@@ -517,7 +518,7 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
                     ),
                     decoration: BoxDecoration(
                       color: tenderAccent.withValues(alpha: 0.12),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(
                       '${update['percent_complete']}%',
@@ -544,7 +545,7 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
                   itemCount: (update['photos'] as List).length,
                   separatorBuilder: (_, _) => const SizedBox(width: 8),
                   itemBuilder: (context, index) => ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12),
                     child: Image.network(
                       '${update['photos'][index]['image']}',
                       width: 74,
@@ -556,7 +557,7 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
                         color: tenderBg,
                         child: Icon(
                           Icons.broken_image_outlined,
-                          color: Colors.grey.shade500,
+                          color: AppColors.textMuted,
                         ),
                       ),
                     ),
@@ -574,7 +575,7 @@ class _TenderProjectScreenState extends State<TenderProjectScreen> {
   Widget _stat(String label, String value) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(label, style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+      Text(label, style: TextStyle(fontSize: 11, color: AppColors.textGrey)),
       const SizedBox(height: 2),
       Text(
         value,
@@ -654,7 +655,7 @@ class _ProgressSheetState extends State<_ProgressSheet> {
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(999)),
         ),
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
         child: Column(
@@ -666,7 +667,7 @@ class _ProgressSheetState extends State<_ProgressSheet> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: AppColors.border,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -679,7 +680,7 @@ class _ProgressSheetState extends State<_ProgressSheet> {
             const SizedBox(height: 4),
             Text(
               'The customer sees this straight away.',
-              style: TextStyle(fontSize: 12.5, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 12.5, color: AppColors.textGrey),
             ),
             const SizedBox(height: 16),
             TextField(
@@ -715,7 +716,7 @@ class _ProgressSheetState extends State<_ProgressSheet> {
                     itemBuilder: (context, index) => Stack(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(12),
                           child: PickedImage(
                             _images[index],
                             width: 72,
@@ -731,7 +732,7 @@ class _ProgressSheetState extends State<_ProgressSheet> {
                             child: Container(
                               padding: const EdgeInsets.all(2),
                               decoration: const BoxDecoration(
-                                color: Colors.black54,
+                                color: AppColors.textGrey,
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(

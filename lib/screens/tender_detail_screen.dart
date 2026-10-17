@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../services/api_service.dart';
@@ -160,12 +161,12 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.cloud_off_outlined, size: 48, color: Colors.grey.shade400),
+          Icon(Icons.cloud_off_outlined, size: 48, color: AppColors.textMuted),
           const SizedBox(height: 12),
           Text(
             _errorMessage!,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey.shade600),
+            style: TextStyle(color: AppColors.textGrey),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
@@ -197,7 +198,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
           color: Colors.green.shade50,
           child: Row(
             children: [
-              Icon(Icons.emoji_events_rounded, color: Colors.green.shade700),
+              Icon(Icons.emoji_events_rounded, color: AppColors.success),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
@@ -221,11 +222,11 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
-          color: Colors.grey.shade100,
+          color: AppColors.surfaceAlt,
           child: Text(
             'The customer went with another vendor this time.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+            style: TextStyle(fontSize: 13, color: AppColors.textBody),
           ),
         ),
       );
@@ -236,11 +237,11 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
-          color: Colors.grey.shade100,
+          color: AppColors.surfaceAlt,
           child: Text(
             'This tender is no longer accepting bids.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+            style: TextStyle(fontSize: 13, color: AppColors.textBody),
           ),
         ),
       );
@@ -329,7 +330,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
                   tender['category_name'],
                   tender['subcategory_name'],
                 ].where((v) => v != null).join(' · '),
-                style: TextStyle(fontSize: 12.5, color: Colors.grey.shade600),
+                style: TextStyle(fontSize: 12.5, color: AppColors.textGrey),
               ),
               const SizedBox(height: 16),
               Container(
@@ -349,7 +350,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
                             'Customer budget',
                             style: TextStyle(
                               fontSize: 11.5,
-                              color: Colors.grey.shade700,
+                              color: AppColors.textBody,
                             ),
                           ),
                           const SizedBox(height: 2),
@@ -371,7 +372,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
                           'Bids so far',
                           style: TextStyle(
                             fontSize: 11.5,
-                            color: Colors.grey.shade700,
+                            color: AppColors.textBody,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -431,7 +432,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
                           'in ${myBid['timeline_days']} days',
                           style: TextStyle(
                             fontSize: 12.5,
-                            color: Colors.grey.shade600,
+                            color: AppColors.textGrey,
                           ),
                         ),
                       ),
@@ -443,7 +444,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
                     'Your payment plan',
                     style: TextStyle(
                       fontSize: 11.5,
-                      color: Colors.grey.shade600,
+                      color: AppColors.textGrey,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -493,7 +494,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
                 const SizedBox(height: 14),
                 Text(
                   'Requirements',
-                  style: TextStyle(fontSize: 11.5, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 11.5, color: AppColors.textGrey),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -577,7 +578,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
                 const SizedBox(height: 4),
                 Text(
                   '${tender['address_text']}',
-                  style: TextStyle(fontSize: 12.5, color: Colors.grey.shade700),
+                  style: TextStyle(fontSize: 12.5, color: AppColors.textBody),
                 ),
               ],
               // The number only arrives once this vendor has won — until then
@@ -600,7 +601,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
                     Icon(
                       Icons.lock_outline_rounded,
                       size: 14,
-                      color: Colors.grey.shade500,
+                      color: AppColors.textMuted,
                     ),
                     const SizedBox(width: 6),
                     Expanded(
@@ -609,7 +610,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
                         'accepts your bid.',
                         style: TextStyle(
                           fontSize: 11.5,
-                          color: Colors.grey.shade600,
+                          color: AppColors.textGrey,
                         ),
                       ),
                     ),
@@ -631,14 +632,14 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.insert_drive_file_outlined, color: Colors.grey.shade600),
+        Icon(Icons.insert_drive_file_outlined, color: AppColors.textGrey),
         const SizedBox(height: 6),
         Text(
           '${attachment['filename'] ?? 'File'}',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
+          style: TextStyle(fontSize: 10, color: AppColors.textGrey),
         ),
       ],
     ),
@@ -653,7 +654,7 @@ class _TenderDetailScreenState extends State<TenderDetailScreen> {
           width: 130,
           child: Text(
             label,
-            style: TextStyle(fontSize: 12.5, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 12.5, color: AppColors.textGrey),
           ),
         ),
         Expanded(

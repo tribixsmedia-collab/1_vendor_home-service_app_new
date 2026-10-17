@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 /// Formatting and status styling shared by the tender screens.
 ///
 /// Hand-rolled rather than using intl, because the vendor app does not depend
 /// on it — the same reason JobsListScreen formats its own dates.
 
-const tenderAccent = Colors.deepOrange;
-const tenderBg = Color(0xFFF6F6F8);
-const tenderBorder = Color(0xFFEDEDF2);
+const tenderAccent = AppColors.primary;
+const tenderBg = AppColors.background;
+const tenderBorder = AppColors.border;
 
 const _months = [
   'Jan',
@@ -112,7 +113,7 @@ TenderStatusStyle tenderStatusStyle(String? status) {
     case 'OPEN':
       return TenderStatusStyle(
         'Open for bids',
-        Colors.blue.shade700,
+        AppColors.info,
         Icons.campaign_rounded,
       );
     case 'AWARDED':
@@ -124,13 +125,13 @@ TenderStatusStyle tenderStatusStyle(String? status) {
     case 'IN_PROGRESS':
       return TenderStatusStyle(
         'In progress',
-        Colors.purple.shade600,
+        AppColors.primaryMid,
         Icons.construction_rounded,
       );
     case 'COMPLETED':
       return TenderStatusStyle(
         'Completed',
-        Colors.green.shade700,
+        AppColors.success,
         Icons.check_circle_outline_rounded,
       );
     case 'CANCELLED':
@@ -142,7 +143,7 @@ TenderStatusStyle tenderStatusStyle(String? status) {
     default:
       return TenderStatusStyle(
         status ?? 'Unknown',
-        Colors.grey,
+        AppColors.textGrey,
         Icons.help_outline_rounded,
       );
   }
@@ -154,31 +155,31 @@ TenderStatusStyle bidStatusStyle(String? status) {
     case 'SUBMITTED':
       return TenderStatusStyle(
         'Waiting on customer',
-        Colors.blue.shade700,
+        AppColors.info,
         Icons.hourglass_top_rounded,
       );
     case 'ACCEPTED':
       return TenderStatusStyle(
         'You won',
-        Colors.green.shade700,
+        AppColors.success,
         Icons.emoji_events_rounded,
       );
     case 'REJECTED':
       return TenderStatusStyle(
         'Not selected',
-        Colors.grey.shade600,
+        AppColors.textGrey,
         Icons.do_not_disturb_on_outlined,
       );
     case 'WITHDRAWN':
       return TenderStatusStyle(
         'Withdrawn',
-        Colors.grey.shade600,
+        AppColors.textGrey,
         Icons.undo_rounded,
       );
     default:
       return TenderStatusStyle(
         status ?? 'Unknown',
-        Colors.grey,
+        AppColors.textGrey,
         Icons.help_outline_rounded,
       );
   }
@@ -200,7 +201,7 @@ class TenderPill extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: style.color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -241,7 +242,7 @@ class TenderCardShell extends StatelessWidget {
       padding: padding ?? const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: tenderBorder),
       ),
       child: child,
@@ -252,7 +253,7 @@ class TenderCardShell extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         child: content,
       ),
     );

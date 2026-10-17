@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import '../services/api_service.dart';
 import '../services/branding_service.dart';
 import '../widgets/app_logo.dart';
@@ -129,8 +130,8 @@ class _LoginScreenState extends State<LoginScreen>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: isDark
-                ? [const Color(0xFF1A1A2E), const Color(0xFF16213E)]
-                : [const Color(0xFFFFF3E0), const Color(0xFFFFE0B2)],
+                ? [AppColors.primaryDark, AppColors.primaryMid]
+                : [AppColors.background, const Color(0xFFECFDF5)],
           ),
         ),
         child: SafeArea(
@@ -143,9 +144,9 @@ class _LoginScreenState extends State<LoginScreen>
                   position: _slideAnimation,
                   child: Card(
                     elevation: 8,
-                    shadowColor: Colors.deepOrange.withOpacity(0.2),
+                    shadowColor: AppColors.primary.withOpacity(0.2),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(32.0),
@@ -172,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen>
                                           .headlineSmall
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.deepOrange.shade800,
+                                            color: AppColors.primaryDark,
                                           ),
                                     ),
                                     const SizedBox(height: 8),
@@ -181,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen>
                                           'Use the credentials provided by your administrator',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: Colors.grey.shade600,
+                                        color: AppColors.textGrey,
                                         fontSize: 14,
                                         height: 1.4,
                                       ),
@@ -204,24 +205,24 @@ class _LoginScreenState extends State<LoginScreen>
                                   hintText: 'Enter your username',
                                   prefixIcon: const Icon(
                                     Icons.person_outline,
-                                    color: Colors.deepOrange,
+                                    color: AppColors.primary,
                                   ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
+                                      color: AppColors.border,
                                     ),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
+                                      color: AppColors.border,
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: const BorderSide(
-                                      color: Colors.deepOrange,
+                                      color: AppColors.primary,
                                       width: 2,
                                     ),
                                   ),
@@ -241,8 +242,8 @@ class _LoginScreenState extends State<LoginScreen>
                                   ),
                                   filled: true,
                                   fillColor: isDark
-                                      ? Colors.grey.shade900
-                                      : Colors.grey.shade50,
+                                      ? AppColors.textDark
+                                      : AppColors.background,
                                   contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16,
                                     vertical: 16,
@@ -264,14 +265,14 @@ class _LoginScreenState extends State<LoginScreen>
                                   hintText: 'Enter your password',
                                   prefixIcon: const Icon(
                                     Icons.lock_outline,
-                                    color: Colors.deepOrange,
+                                    color: AppColors.primary,
                                   ),
                                   suffixIcon: IconButton(
                                     icon: Icon(
                                       _obscurePassword
                                           ? Icons.visibility_off_outlined
                                           : Icons.visibility_outlined,
-                                      color: Colors.grey.shade600,
+                                      color: AppColors.textGrey,
                                     ),
                                     onPressed: () => setState(
                                       () =>
@@ -281,19 +282,19 @@ class _LoginScreenState extends State<LoginScreen>
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
+                                      color: AppColors.border,
                                     ),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
+                                      color: AppColors.border,
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: const BorderSide(
-                                      color: Colors.deepOrange,
+                                      color: AppColors.primary,
                                       width: 2,
                                     ),
                                   ),
@@ -313,8 +314,8 @@ class _LoginScreenState extends State<LoginScreen>
                                   ),
                                   filled: true,
                                   fillColor: isDark
-                                      ? Colors.grey.shade900
-                                      : Colors.grey.shade50,
+                                      ? AppColors.textDark
+                                      : AppColors.background,
                                   contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16,
                                     vertical: 16,
@@ -375,10 +376,10 @@ class _LoginScreenState extends State<LoginScreen>
                                 child: ElevatedButton(
                                   onPressed: _isLoading ? null : _handleLogin,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.deepOrange,
+                                    backgroundColor: AppColors.primary,
                                     foregroundColor: Colors.white,
                                     elevation: 2,
-                                    shadowColor: Colors.deepOrange.withOpacity(
+                                    shadowColor: AppColors.primary.withOpacity(
                                       0.4,
                                     ),
                                     shape: RoundedRectangleBorder(
@@ -420,7 +421,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     "Don't have an account?",
                                     style: TextStyle(
                                       fontSize: 13,
-                                      color: Colors.grey.shade600,
+                                      color: AppColors.textGrey,
                                     ),
                                   ),
                                   TextButton(
@@ -436,7 +437,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       'Sign up',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.deepOrange,
+                                        color: AppColors.primary,
                                       ),
                                     ),
                                   ),
@@ -451,14 +452,14 @@ class _LoginScreenState extends State<LoginScreen>
                                   Icon(
                                     Icons.security,
                                     size: 14,
-                                    color: Colors.grey.shade500,
+                                    color: AppColors.textMuted,
                                   ),
                                   const SizedBox(width: 6),
                                   Text(
                                     'Secure vendor portal',
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.grey.shade500,
+                                      color: AppColors.textMuted,
                                     ),
                                   ),
                                 ],

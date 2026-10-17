@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 import '../models/app_notification.dart';
 import '../services/notification_service.dart';
@@ -6,10 +7,9 @@ import 'support_screen.dart';
 import 'ticket_detail_screen.dart';
 
 /// The vendor app's accent, matching the jobs list, login and job detail
-/// screens. Taken literally rather than from `colorScheme.primary`, because
-/// the Material 3 scheme generated from the deepOrange seed comes out muted
-/// and reads as a different colour beside the rest of the app.
-const Color _accent = Colors.deepOrange;
+/// screens. Taken from the shared palette rather than
+/// `Theme.of(context).colorScheme`, so these stay `const`.
+const Color _accent = AppColors.primary;
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -215,7 +215,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     final unread = _items.where((n) => !n.isRead).length;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F5),
+      backgroundColor: AppColors.surfaceAlt,
       appBar: AppBar(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
@@ -236,7 +236,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
                 decoration: BoxDecoration(
                   color: _accent,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
                   '$unread',
@@ -312,10 +312,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 18),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: selected ? _accent : Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(30),
+                  color: selected ? _accent : AppColors.surfaceAlt,
+                  borderRadius: BorderRadius.circular(999),
                   border: Border.all(
-                    color: selected ? _accent : Colors.grey.shade300,
+                    color: selected ? _accent : AppColors.border,
                   ),
                 ),
                 child: Text(
@@ -323,7 +323,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   style: TextStyle(
                     fontSize: 13.5,
                     fontWeight: FontWeight.w600,
-                    color: selected ? Colors.white : Colors.grey.shade700,
+                    color: selected ? Colors.white : AppColors.textBody,
                   ),
                 ),
               ),
@@ -432,7 +432,7 @@ class _GroupHeader extends StatelessWidget {
           fontSize: 11.5,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.9,
-          color: Colors.grey.shade600,
+          color: AppColors.textGrey,
         ),
       ),
     );
@@ -453,7 +453,7 @@ class _NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(14);
+    final radius = BorderRadius.circular(12);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
@@ -467,7 +467,7 @@ class _NotificationCard extends StatelessWidget {
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 22),
           decoration: BoxDecoration(
-            color: const Color(0xFFE24B4A),
+            color: AppColors.danger,
             borderRadius: radius,
           ),
           child: const Row(
@@ -497,7 +497,7 @@ class _NotificationCard extends StatelessWidget {
                 borderRadius: radius,
                 border: Border.all(
                   color: note.isRead
-                      ? Colors.grey.shade200
+                      ? AppColors.border
                       : note.accent.withValues(alpha: 0.35),
                 ),
               ),
@@ -512,7 +512,7 @@ class _NotificationCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: note.accent,
                           borderRadius: const BorderRadius.horizontal(
-                            left: Radius.circular(14),
+                            left: Radius.circular(12),
                           ),
                         ),
                       ),
@@ -553,7 +553,7 @@ class _NotificationCard extends StatelessWidget {
                                       fontWeight: note.isRead
                                           ? FontWeight.w500
                                           : FontWeight.w700,
-                                      color: Colors.black87,
+                                      color: AppColors.textDark,
                                     ),
                                   ),
                                   if (note.body.isNotEmpty) ...[
@@ -563,7 +563,7 @@ class _NotificationCard extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 13,
                                         height: 1.4,
-                                        color: Colors.grey.shade600,
+                                        color: AppColors.textGrey,
                                       ),
                                     ),
                                   ],
@@ -573,14 +573,14 @@ class _NotificationCard extends StatelessWidget {
                                       Icon(
                                         Icons.schedule_rounded,
                                         size: 13,
-                                        color: Colors.grey.shade500,
+                                        color: AppColors.textMuted,
                                       ),
                                       const SizedBox(width: 4),
                                       Text(
                                         note.timeAgo,
                                         style: TextStyle(
                                           fontSize: 11.5,
-                                          color: Colors.grey.shade500,
+                                          color: AppColors.textMuted,
                                         ),
                                       ),
                                       if (!note.isRead) ...[
@@ -595,7 +595,7 @@ class _NotificationCard extends StatelessWidget {
                                               alpha: 0.12,
                                             ),
                                             borderRadius:
-                                                BorderRadius.circular(20),
+                                                BorderRadius.circular(999),
                                           ),
                                           child: const Text(
                                             'New',
@@ -679,7 +679,7 @@ class _EmptyState extends StatelessWidget {
               style: TextStyle(
                 fontSize: 13.5,
                 height: 1.5,
-                color: Colors.grey.shade600,
+                color: AppColors.textGrey,
               ),
             ),
             if (actionLabel != null) ...[
@@ -694,7 +694,7 @@ class _EmptyState extends StatelessWidget {
                     vertical: 13,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: Text(actionLabel!),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'package:flutter/services.dart';
 
 import '../services/api_service.dart';
@@ -285,7 +286,7 @@ class _SubmitBidScreenState extends State<SubmitBidScreen> {
                         'Budget ${tenderMoney(widget.expectedBudget)}',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.grey.shade600,
+                          color: AppColors.textGrey,
                         ),
                       ),
                     ],
@@ -325,7 +326,7 @@ class _SubmitBidScreenState extends State<SubmitBidScreen> {
                         fontWeight: FontWeight.w600,
                         color: _difference > 0
                             ? Colors.red.shade600
-                            : Colors.green.shade700,
+                            : AppColors.success,
                       ),
                     ),
                   ],
@@ -352,7 +353,7 @@ class _SubmitBidScreenState extends State<SubmitBidScreen> {
                     'so specifics win work.',
                     style: TextStyle(
                       fontSize: 11.5,
-                      color: Colors.grey.shade600,
+                      color: AppColors.textGrey,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -429,7 +430,7 @@ class _SubmitBidScreenState extends State<SubmitBidScreen> {
           Text(
             'Optional. Break the job into stages and the customer releases '
             'payment as each one is done.',
-            style: TextStyle(fontSize: 11.5, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 11.5, color: AppColors.textGrey),
           ),
           const SizedBox(height: 12),
 
@@ -472,7 +473,7 @@ class _SubmitBidScreenState extends State<SubmitBidScreen> {
                   IconButton(
                     onPressed: () => _removeMilestone(i),
                     icon: const Icon(Icons.close_rounded, size: 20),
-                    color: Colors.grey.shade600,
+                    color: AppColors.textGrey,
                     tooltip: 'Remove',
                   ),
                 ],
@@ -484,7 +485,7 @@ class _SubmitBidScreenState extends State<SubmitBidScreen> {
               children: [
                 Text(
                   'Stages total',
-                  style: TextStyle(fontSize: 12.5, color: Colors.grey.shade700),
+                  style: TextStyle(fontSize: 12.5, color: AppColors.textBody),
                 ),
                 const Spacer(),
                 Text(
@@ -492,7 +493,7 @@ class _SubmitBidScreenState extends State<SubmitBidScreen> {
                   style: TextStyle(
                     fontSize: 13.5,
                     fontWeight: FontWeight.w700,
-                    color: mismatch ? Colors.red.shade600 : Colors.black87,
+                    color: mismatch ? Colors.red.shade600 : AppColors.textDark,
                   ),
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 import '../screens/notification_screen.dart';
 import '../services/notification_service.dart';
@@ -45,8 +46,8 @@ class _NotificationBellState extends State<NotificationBell> {
                       minHeight: 18,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFDC2626),
-                      borderRadius: BorderRadius.circular(9),
+                      color: AppColors.danger,
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       count > 99 ? '99+' : '$count',

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -282,11 +283,11 @@ class _SignupScreenState extends State<SignupScreen> {
     return InputDecoration(
       labelText: label,
       hintText: hint,
-      prefixIcon: Icon(icon, color: Colors.deepOrange),
+      prefixIcon: Icon(icon, color: AppColors.primary),
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Colors.deepOrange, width: 2),
+        borderSide: const BorderSide(color: AppColors.primary, width: 2),
       ),
       filled: true,
       contentPadding: const EdgeInsets.symmetric(
@@ -318,13 +319,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     'empty and you are listed for all states.'
               : '${_selectedStates.length} state'
                     '${_selectedStates.length == 1 ? '' : 's'} picked.',
-          style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+          style: TextStyle(fontSize: 12, color: AppColors.textGrey),
         ),
         const SizedBox(height: 8),
         Container(
           constraints: const BoxConstraints(maxHeight: 220),
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade300),
+            border: Border.all(color: AppColors.border),
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.all(8),
@@ -337,8 +338,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 return FilterChip(
                   label: Text(state),
                   selected: selected,
-                  selectedColor: Colors.deepOrange.shade100,
-                  checkmarkColor: Colors.deepOrange.shade800,
+                  selectedColor: const Color(0xFFD5F2EC),
+                  checkmarkColor: AppColors.primaryDark,
                   onSelected: (on) => setState(() {
                     on
                         ? _selectedStates.add(state)
@@ -360,7 +361,7 @@ class _SignupScreenState extends State<SignupScreen> {
       style: TextStyle(
         fontSize: 15,
         fontWeight: FontWeight.bold,
-        color: Colors.deepOrange.shade800,
+        color: AppColors.primaryDark,
         letterSpacing: 0.3,
       ),
     ),
@@ -411,8 +412,8 @@ class _SignupScreenState extends State<SignupScreen> {
             fontSize: 12,
             height: 1.4,
             color: asksForApproval
-                ? Colors.orange.shade800
-                : Colors.grey.shade600,
+                ? AppColors.accentDark
+                : AppColors.textGrey,
           ),
         ),
       ],
@@ -432,13 +433,13 @@ class _SignupScreenState extends State<SignupScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: file != null ? Colors.green.shade300 : Colors.grey.shade300,
+          color: file != null ? Colors.green.shade300 : AppColors.border,
         ),
       ),
       child: ListTile(
         leading: Icon(
           file != null ? Icons.check_circle : Icons.upload_file_outlined,
-          color: file != null ? Colors.green.shade600 : Colors.grey.shade600,
+          color: file != null ? Colors.green.shade600 : AppColors.textGrey,
         ),
         title: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(
@@ -464,7 +465,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create vendor account'),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
       body: Container(
@@ -473,8 +474,8 @@ class _SignupScreenState extends State<SignupScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: isDark
-                ? [const Color(0xFF1A1A2E), const Color(0xFF16213E)]
-                : [const Color(0xFFFFF3E0), const Color(0xFFFFE0B2)],
+                ? [AppColors.primaryDark, AppColors.primaryMid]
+                : [AppColors.background, const Color(0xFFECFDF5)],
           ),
         ),
         child: SafeArea(
@@ -483,7 +484,7 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Card(
               elevation: 6,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(24),
@@ -496,7 +497,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         'Your profile is reviewed by an admin before you can '
                         'log in and receive jobs.',
                         style: TextStyle(
-                          color: Colors.grey.shade600,
+                          color: AppColors.textGrey,
                           fontSize: 13,
                           height: 1.4,
                         ),
@@ -597,7 +598,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         'Which services do you provide?',
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.grey.shade700,
+                          color: AppColors.textBody,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -637,8 +638,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             return FilterChip(
                               label: Text('${c['name']}'),
                               selected: selected,
-                              selectedColor: Colors.deepOrange.shade100,
-                              checkmarkColor: Colors.deepOrange.shade800,
+                              selectedColor: const Color(0xFFD5F2EC),
+                              checkmarkColor: AppColors.primaryDark,
                               onSelected: (on) => setState(() {
                                 on
                                     ? _selectedCategoryIds.add(id)
@@ -722,8 +723,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 14),
-                          foregroundColor: Colors.deepOrange,
-                          side: const BorderSide(color: Colors.deepOrange),
+                          foregroundColor: AppColors.primary,
+                          side: const BorderSide(color: AppColors.primary),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -764,7 +765,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                             color: Colors.red.shade50,
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: Colors.red.shade200),
                           ),
                           child: Row(
@@ -795,7 +796,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: ElevatedButton(
                           onPressed: _isSubmitting ? null : _submit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepOrange,
+                            backgroundColor: AppColors.primary,
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),

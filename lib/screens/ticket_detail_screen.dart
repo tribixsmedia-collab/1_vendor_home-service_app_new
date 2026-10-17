@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import '../services/api_service.dart';
 
 /// One support conversation. The vendor's own messages sit on the right,
@@ -92,9 +93,9 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
     final messages = _ticket?['messages'] as List<dynamic>? ?? const [];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F8),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,12 +142,12 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.grey),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.textGrey),
             const SizedBox(height: 12),
             Text(
               _errorMessage!,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.grey),
+              style: const TextStyle(color: AppColors.textGrey),
             ),
             const SizedBox(height: 16),
             ElevatedButton(onPressed: _loadTicket, child: const Text('Retry')),
@@ -168,10 +169,10 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
           maxWidth: MediaQuery.of(context).size.width * 0.75,
         ),
         decoration: BoxDecoration(
-          color: isSupport ? Colors.white : Colors.deepOrange,
+          color: isSupport ? Colors.white : AppColors.primary,
           borderRadius: BorderRadius.circular(16),
           border: isSupport
-              ? Border.all(color: const Color(0xFFEDEDF2))
+              ? Border.all(color: AppColors.border)
               : null,
         ),
         child: Column(
@@ -180,7 +181,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
             Text(
               '${msg['message'] ?? ''}',
               style: TextStyle(
-                color: isSupport ? Colors.black87 : Colors.white,
+                color: isSupport ? AppColors.textDark : Colors.white,
                 fontSize: 14,
                 height: 1.35,
               ),
@@ -189,7 +190,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
             Text(
               isSupport ? 'Support' : 'You',
               style: TextStyle(
-                color: isSupport ? Colors.black45 : Colors.white70,
+                color: isSupport ? AppColors.textMuted : Colors.white70,
                 fontSize: 10,
               ),
             ),
@@ -238,7 +239,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
             ),
             const SizedBox(width: 8),
             CircleAvatar(
-              backgroundColor: Colors.deepOrange,
+              backgroundColor: AppColors.primary,
               child: _isSending
                   ? const SizedBox(
                       width: 18,

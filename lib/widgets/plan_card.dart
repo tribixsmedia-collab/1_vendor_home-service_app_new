@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 /// One subscription tier, drawn the same way on the signup screen and on the
 /// subscription screen so a vendor recognises what they picked.
@@ -50,22 +51,22 @@ class PlanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final highlighted = selected || isCurrent;
-    final accent = isCurrent ? Colors.green.shade700 : Colors.deepOrange;
+    final accent = isCurrent ? AppColors.success : AppColors.primary;
 
     final label = badge ??
         (isCurrent ? 'Current plan' : (plan['is_default'] == true ? 'Included' : null));
 
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: highlighted ? accent : const Color(0xFFEDEDF2),
+            color: highlighted ? accent : AppColors.border,
             width: highlighted ? 2 : 1,
           ),
         ),
@@ -81,7 +82,7 @@ class PlanCard extends StatelessWidget {
                         ? Icons.radio_button_checked
                         : Icons.radio_button_unchecked,
                     size: 20,
-                    color: selected ? accent : Colors.grey.shade400,
+                    color: selected ? accent : AppColors.textMuted,
                   ),
                   const SizedBox(width: 10),
                 ],
@@ -102,7 +103,7 @@ class PlanCard extends StatelessWidget {
                           '${plan['description']}',
                           style: TextStyle(
                             fontSize: 12.5,
-                            color: Colors.grey.shade600,
+                            color: AppColors.textGrey,
                           ),
                         ),
                       ],
@@ -126,7 +127,7 @@ class PlanCard extends StatelessWidget {
                         '${plan['billing_period_display'] ?? ''}',
                         style: TextStyle(
                           fontSize: 11,
-                          color: Colors.grey.shade600,
+                          color: AppColors.textGrey,
                         ),
                       ),
                   ],
@@ -139,7 +140,7 @@ class PlanCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
                   color: accent.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
                   label,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'package:geolocator/geolocator.dart';
 import '../services/api_service.dart';
 
@@ -118,7 +119,7 @@ class _LocationSettingsScreenState extends State<LocationSettingsScreen> {
                   const Text(
                     'Set your location so the admin can assign you nearby jobs. '
                     'Update it whenever your base location changes.',
-                    style: TextStyle(color: Colors.grey, height: 1.4),
+                    style: TextStyle(color: AppColors.textGrey, height: 1.4),
                   ),
                   const SizedBox(height: 24),
 
@@ -168,7 +169,7 @@ class _LocationSettingsScreenState extends State<LocationSettingsScreen> {
                                   'Lng: ${_longitude!.toStringAsFixed(6)}',
                                   style: const TextStyle(
                                     fontSize: 12,
-                                    color: Colors.black54,
+                                    color: AppColors.textGrey,
                                     fontFamily: 'monospace',
                                   ),
                                 )
@@ -177,7 +178,7 @@ class _LocationSettingsScreenState extends State<LocationSettingsScreen> {
                                   'Tap the button below to capture your GPS location.',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.black54,
+                                    color: AppColors.textGrey,
                                   ),
                                 ),
                             ],
@@ -201,7 +202,7 @@ class _LocationSettingsScreenState extends State<LocationSettingsScreen> {
                         _statusMessage!,
                         style: TextStyle(
                           color: _statusMessage!.contains('success')
-                              ? Colors.green.shade700
+                              ? AppColors.success
                               : Colors.red.shade700,
                           fontSize: 13,
                         ),

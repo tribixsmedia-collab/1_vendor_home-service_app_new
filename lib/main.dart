@@ -5,6 +5,7 @@ import 'services/api_service.dart';
 import 'services/branding_service.dart';
 import 'services/push_service.dart';
 import 'screens/splash_screen.dart';
+import 'theme.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -41,16 +42,9 @@ class VendorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Home Service - Vendor',
+      title: 'RNI Services - Vendor',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-        useMaterial3: true,
-        inputDecorationTheme: const InputDecorationTheme(
-          filled: true,
-          fillColor: Colors.white,
-        ),
-      ),
+      theme: buildAppTheme(),
       navigatorKey: navigatorKey,
       home: const SplashScreen(),
     );

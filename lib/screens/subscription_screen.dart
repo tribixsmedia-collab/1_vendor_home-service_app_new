@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 import '../services/api_service.dart';
 import '../widgets/plan_card.dart';
@@ -113,7 +114,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 labelText: 'Message (optional)',
                 hintText: 'Anything your admin should know',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
             ),
@@ -125,7 +126,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             child: const Text('Cancel'),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: Colors.deepOrange),
+            style: FilledButton.styleFrom(backgroundColor: AppColors.primary),
             onPressed: () => Navigator.pop(ctx, controller.text.trim()),
             child: const Text('Send request'),
           ),
@@ -175,10 +176,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F8),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text('My Plan'),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
       body: _isLoading
@@ -216,11 +217,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             Text(
               _errorMessage ?? 'Something went wrong.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey.shade700),
+              style: TextStyle(color: AppColors.textBody),
             ),
             const SizedBox(height: 16),
             FilledButton(
-              style: FilledButton.styleFrom(backgroundColor: Colors.deepOrange),
+              style: FilledButton.styleFrom(backgroundColor: AppColors.primary),
               onPressed: _load,
               child: const Text('Try again'),
             ),
@@ -239,8 +240,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFEDEDF2)),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +257,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               style: TextStyle(
                 fontSize: 13,
                 height: 1.35,
-                color: Colors.grey.shade700,
+                color: AppColors.textBody,
               ),
             ),
           ],
@@ -283,7 +284,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             style: TextStyle(
               fontSize: 12.5,
               fontWeight: expiringSoon ? FontWeight.bold : FontWeight.normal,
-              color: expiringSoon ? Colors.orange.shade800 : Colors.grey.shade600,
+              color: expiringSoon ? AppColors.accentDark : AppColors.textGrey,
             ),
           ),
         ),
@@ -300,13 +301,13 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.orange.shade200),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.hourglass_top, size: 20, color: Colors.orange.shade800),
+          Icon(Icons.hourglass_top, size: 20, color: AppColors.accentDark),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -317,7 +318,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.orange.shade900,
+                    color: AppColors.accentDark,
                   ),
                 ),
                 const SizedBox(height: 3),
@@ -327,7 +328,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   style: TextStyle(
                     fontSize: 12.5,
                     height: 1.35,
-                    color: Colors.orange.shade900,
+                    color: AppColors.accentDark,
                   ),
                 ),
               ],
@@ -335,7 +336,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           ),
           TextButton(
             onPressed: _withdraw,
-            style: TextButton.styleFrom(foregroundColor: Colors.orange.shade900),
+            style: TextButton.styleFrom(foregroundColor: AppColors.accentDark),
             child: const Text('Withdraw'),
           ),
         ],
@@ -368,7 +369,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               ? 'Withdraw your open request before asking for a different plan.'
               : 'Asking sends a request to your admin. Nothing is charged in '
                     'the app.',
-          style: TextStyle(fontSize: 12.5, color: Colors.grey.shade600),
+          style: TextStyle(fontSize: 12.5, color: AppColors.textGrey),
         ),
         const SizedBox(height: 12),
         ...others.map(
@@ -381,11 +382,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     ? null
                     : () => _requestUpgrade(plan),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.deepOrange,
-                  side: const BorderSide(color: Colors.deepOrange),
+                  foregroundColor: AppColors.primary,
+                  side: const BorderSide(color: AppColors.primary),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: _busyPlanId == plan['id']

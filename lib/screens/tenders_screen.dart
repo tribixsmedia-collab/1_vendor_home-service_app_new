@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 import '../services/api_service.dart';
 import '../utils/tender_format.dart';
@@ -257,7 +258,7 @@ class _TendersScreenState extends State<TendersScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 54, color: Colors.grey.shade400),
+            Icon(icon, size: 54, color: AppColors.textMuted),
             const SizedBox(height: 16),
             Text(
               title,
@@ -271,7 +272,7 @@ class _TendersScreenState extends State<TendersScreen>
             Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 13, color: AppColors.textGrey),
             ),
             if (action != null) ...[const SizedBox(height: 20), action],
           ],
@@ -321,10 +322,10 @@ class _OpenTenderCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: (urgent ? Colors.red : Colors.grey).withValues(
+                    color: (urgent ? Colors.red : AppColors.textGrey).withValues(
                       alpha: 0.12,
                     ),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
                     deadlineHint,
@@ -333,7 +334,7 @@ class _OpenTenderCard extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       color: urgent
                           ? Colors.red.shade700
-                          : Colors.grey.shade700,
+                          : AppColors.textBody,
                     ),
                   ),
                 ),
@@ -347,7 +348,7 @@ class _OpenTenderCard extends StatelessWidget {
               tender['category_name'],
               tender['subcategory_name'],
             ].where((v) => v != null).join(' · '),
-            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 12, color: AppColors.textGrey),
           ),
           const SizedBox(height: 14),
           Row(
@@ -375,7 +376,7 @@ class _OpenTenderCard extends StatelessWidget {
                 Icon(
                   Icons.location_on_outlined,
                   size: 15,
-                  color: Colors.grey.shade600,
+                  color: AppColors.textGrey,
                 ),
                 const SizedBox(width: 5),
                 Expanded(
@@ -385,7 +386,7 @@ class _OpenTenderCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 12.5,
-                      color: Colors.grey.shade700,
+                      color: AppColors.textBody,
                     ),
                   ),
                 ),
@@ -394,7 +395,7 @@ class _OpenTenderCard extends StatelessWidget {
                     '${tender['area_sqft']} sq ft',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey.shade600,
+                      color: AppColors.textGrey,
                     ),
                   ),
               ],
@@ -407,7 +408,7 @@ class _OpenTenderCard extends StatelessWidget {
 
   Widget _fact(IconData icon, String label, String value) => Row(
     children: [
-      Icon(icon, size: 17, color: Colors.grey.shade600),
+      Icon(icon, size: 17, color: AppColors.textGrey),
       const SizedBox(width: 8),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -415,7 +416,7 @@ class _OpenTenderCard extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: 10.5, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 10.5, color: AppColors.textGrey),
           ),
           Text(
             value,
@@ -463,7 +464,7 @@ class _MyBidCard extends StatelessWidget {
                       '${bid['timeline_days'] != null ? ' · ${bid['timeline_days']} days' : ''}',
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.grey.shade600,
+                        color: AppColors.textGrey,
                       ),
                     ),
                   ],
@@ -478,7 +479,7 @@ class _MyBidCard extends StatelessWidget {
               '${bid['work_plan']}',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 12.5, color: Colors.grey.shade700),
+              style: TextStyle(fontSize: 12.5, color: AppColors.textBody),
             ),
           ],
         ],
@@ -524,7 +525,7 @@ class _ProjectCard extends StatelessWidget {
           const SizedBox(height: 5),
           Text(
             '${project['code'] ?? ''} · ${project['category_name'] ?? ''}',
-            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 12, color: AppColors.textGrey),
           ),
           const SizedBox(height: 12),
           Row(
@@ -545,8 +546,8 @@ class _ProjectCard extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: project['payment_status'] == 'PAID'
-                      ? Colors.green.shade700
-                      : Colors.grey.shade600,
+                      ? AppColors.success
+                      : AppColors.textGrey,
                 ),
               ),
             ],

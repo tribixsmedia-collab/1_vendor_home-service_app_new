@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,9 +10,9 @@ import '../services/api_service.dart';
 import '../widgets/slide_action.dart';
 
 /// The vendor app's accent, matching the login, jobs list and notification
-/// screens. Literal rather than `colorScheme.primary`, because the Material 3
-/// scheme generated from the deepOrange seed comes out noticeably muted.
-const Color _accent = Colors.deepOrange;
+/// screens. Taken from the shared palette rather than
+/// `Theme.of(context).colorScheme`, so these stay `const`.
+const Color _accent = AppColors.primary;
 
 class JobDetailScreen extends StatefulWidget {
   final Map<String, dynamic> job;
@@ -213,7 +214,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
     final status = '${_job['status']}';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F5),
+      backgroundColor: AppColors.surfaceAlt,
       appBar: AppBar(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
@@ -275,7 +276,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 ),
                 decoration: BoxDecoration(
                   color: meta.color.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(999),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -296,7 +297,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
               const Spacer(),
               Text(
                 '#${_job['id']}',
-                style: TextStyle(fontSize: 12.5, color: Colors.grey.shade500),
+                style: TextStyle(fontSize: 12.5, color: AppColors.textMuted),
               ),
             ],
           ),
@@ -311,7 +312,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                     'Job value',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey.shade600,
+                      color: AppColors.textGrey,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -339,7 +340,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 child: Text(
                   '${_job['payment_status']}',
                   style: TextStyle(
-                    color: paid ? Colors.green.shade800 : Colors.orange.shade900,
+                    color: paid ? Colors.green.shade800 : AppColors.accentDark,
                     fontSize: 11.5,
                     fontWeight: FontWeight.bold,
                   ),
@@ -392,7 +393,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                         _customerPhone,
                         style: TextStyle(
                           fontSize: 13.5,
-                          color: Colors.grey.shade600,
+                          color: AppColors.textGrey,
                         ),
                       ),
                     ],
@@ -411,7 +412,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                     child: _actionChip(
                       icon: Icons.call_rounded,
                       label: 'Call',
-                      color: Colors.green.shade700,
+                      color: AppColors.success,
                       onTap: _callCustomer,
                     ),
                   ),
@@ -422,7 +423,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                     child: _actionChip(
                       icon: Icons.directions_rounded,
                       label: 'Navigate',
-                      color: Colors.blue.shade700,
+                      color: AppColors.info,
                       onTap: _navigateToCustomer,
                     ),
                   ),
@@ -517,7 +518,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
         message.contains('success') ||
         message.contains('completed') ||
         message.endsWith('...');
-    final color = isGood ? Colors.green.shade700 : Colors.red.shade700;
+    final color = isGood ? AppColors.success : Colors.red.shade700;
 
     return Container(
       padding: const EdgeInsets.all(14),
@@ -566,7 +567,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
           const SizedBox(height: 10),
           Text(
             'Opens the camera and records your location',
-            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 12, color: AppColors.textGrey),
           ),
         ],
       );
@@ -586,7 +587,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
           const SizedBox(height: 10),
           Text(
             'This marks the job complete for the customer',
-            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 12, color: AppColors.textGrey),
           ),
         ],
       );
@@ -598,7 +599,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           decoration: BoxDecoration(
             color: Colors.green.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(999),
           ),
           child: const Row(
             mainAxisSize: MainAxisSize.min,
@@ -635,7 +636,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -672,10 +673,10 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
           height: 34,
           width: 34,
           decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-            borderRadius: BorderRadius.circular(9),
+            color: AppColors.surfaceAlt,
+            borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, size: 17, color: Colors.grey.shade700),
+          child: Icon(icon, size: 17, color: AppColors.textBody),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -684,7 +685,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
             children: [
               Text(
                 label,
-                style: TextStyle(fontSize: 11.5, color: Colors.grey.shade600),
+                style: TextStyle(fontSize: 11.5, color: AppColors.textGrey),
               ),
               const SizedBox(height: 3),
               Text(
@@ -738,7 +739,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       case 'ASSIGNED':
         return (
           label: 'ASSIGNED',
-          color: Colors.blue.shade700,
+          color: AppColors.info,
           icon: Icons.assignment_ind_outlined,
         );
       case 'IN_PROGRESS':
@@ -750,7 +751,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       case 'COMPLETED':
         return (
           label: 'COMPLETED',
-          color: Colors.green.shade700,
+          color: AppColors.success,
           icon: Icons.check_circle_outline,
         );
       case 'CANCELLED':
@@ -762,7 +763,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       default:
         return (
           label: status,
-          color: Colors.grey.shade700,
+          color: AppColors.textBody,
           icon: Icons.info_outline,
         );
     }
@@ -834,7 +835,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                       resp['title']!,
                       style: TextStyle(
                         fontSize: 11.5,
-                        color: Colors.grey.shade600,
+                        color: AppColors.textGrey,
                       ),
                     ),
                     const SizedBox(height: 2),

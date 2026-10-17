@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import '../services/api_service.dart';
 import 'job_detail_screen.dart';
 import 'profile_screen.dart';
@@ -27,8 +28,8 @@ class _JobsListScreenState extends State<JobsListScreen>
   bool _isLoading = true;
   String? _errorMessage;
 
-  static const _bg = Color(0xFFF6F6F8);
-  static const _border = Color(0xFFEDEDF2);
+  static const _bg = AppColors.background;
+  static const _border = AppColors.border;
 
   @override
   void initState() {
@@ -81,19 +82,19 @@ class _JobsListScreenState extends State<JobsListScreen>
       case 'ASSIGNED':
         return _StatusStyle(
           'Assigned',
-          Colors.blue.shade700,
+          AppColors.info,
           Icons.assignment_outlined,
         );
       case 'IN_PROGRESS':
         return _StatusStyle(
           'In Progress',
-          Colors.purple.shade600,
+          AppColors.primaryMid,
           Icons.handyman_outlined,
         );
       case 'COMPLETED':
         return _StatusStyle(
           'Completed',
-          Colors.green.shade700,
+          AppColors.success,
           Icons.check_circle_outline,
         );
       case 'CANCELLED':
@@ -103,7 +104,7 @@ class _JobsListScreenState extends State<JobsListScreen>
           Icons.cancel_outlined,
         );
       default:
-        return _StatusStyle(status, Colors.grey, Icons.help_outline);
+        return _StatusStyle(status, AppColors.textGrey, Icons.help_outline);
     }
   }
 
@@ -198,7 +199,7 @@ class _JobsListScreenState extends State<JobsListScreen>
       backgroundColor: _bg,
       appBar: AppBar(
         title: const Text('My Jobs'),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -241,7 +242,7 @@ class _JobsListScreenState extends State<JobsListScreen>
                 icon: const Icon(Icons.refresh),
                 label: const Text('Retry'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
+                  backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
                 ),
               ),
@@ -300,7 +301,7 @@ class _JobsListScreenState extends State<JobsListScreen>
       margin: const EdgeInsets.only(bottom: 14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: _border),
       ),
       clipBehavior: Clip.antiAlias,
@@ -332,7 +333,7 @@ class _JobsListScreenState extends State<JobsListScreen>
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black87,
+                              color: AppColors.textDark,
                             ),
                           ),
                           const SizedBox(height: 3),
@@ -342,7 +343,7 @@ class _JobsListScreenState extends State<JobsListScreen>
                                 'Job #${job['id']}',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey.shade600,
+                                  color: AppColors.textGrey,
                                 ),
                               ),
                               if (dayHint != null && !isDone) ...[
@@ -383,7 +384,7 @@ class _JobsListScreenState extends State<JobsListScreen>
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
-                        color: Colors.black87,
+                        color: AppColors.textDark,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -392,7 +393,7 @@ class _JobsListScreenState extends State<JobsListScreen>
                     Icon(
                       Icons.chevron_right,
                       size: 20,
-                      color: Colors.grey.shade500,
+                      color: AppColors.textMuted,
                     ),
                   ],
                 ),
@@ -409,7 +410,7 @@ class _JobsListScreenState extends State<JobsListScreen>
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: style.color.withValues(alpha: 0.10),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -431,7 +432,7 @@ class _JobsListScreenState extends State<JobsListScreen>
 
   Widget _dayChip(String hint) {
     final isOverdue = hint == 'Overdue';
-    final color = isOverdue ? Colors.red.shade600 : Colors.deepOrange;
+    final color = isOverdue ? Colors.red.shade600 : AppColors.primary;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
@@ -452,7 +453,7 @@ class _JobsListScreenState extends State<JobsListScreen>
 
   Widget _paymentChip(String paymentStatus) {
     final isPaid = paymentStatus == 'PAID';
-    final color = isPaid ? Colors.green.shade700 : Colors.orange.shade800;
+    final color = isPaid ? AppColors.success : AppColors.accentDark;
     final label = isPaid
         ? 'Paid'
         : paymentStatus == 'UNPAID'
@@ -482,7 +483,7 @@ class _JobsListScreenState extends State<JobsListScreen>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 16, color: Colors.grey.shade600),
+          Icon(icon, size: 16, color: AppColors.textGrey),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
@@ -492,7 +493,7 @@ class _JobsListScreenState extends State<JobsListScreen>
               style: const TextStyle(
                 fontSize: 13.5,
                 height: 1.35,
-                color: Colors.black87,
+                color: AppColors.textDark,
               ),
             ),
           ),
@@ -520,9 +521,9 @@ class _JobsListScreenState extends State<JobsListScreen>
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.deepOrange.withValues(alpha: 0.08),
+                color: AppColors.primary.withValues(alpha: 0.08),
               ),
-              child: Icon(icon, size: 34, color: Colors.deepOrange),
+              child: Icon(icon, size: 34, color: AppColors.primary),
             ),
             const SizedBox(height: 18),
             Text(
@@ -531,7 +532,7 @@ class _JobsListScreenState extends State<JobsListScreen>
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: Colors.black87,
+                color: AppColors.textDark,
               ),
             ),
             const SizedBox(height: 6),
@@ -541,7 +542,7 @@ class _JobsListScreenState extends State<JobsListScreen>
               style: TextStyle(
                 fontSize: 13.5,
                 height: 1.4,
-                color: Colors.grey.shade600,
+                color: AppColors.textGrey,
               ),
             ),
             if (action != null) ...[const SizedBox(height: 18), action],

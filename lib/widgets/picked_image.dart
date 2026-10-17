@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'package:image_picker/image_picker.dart' show XFile;
 
 /// Preview of an image the vendor has just picked or photographed.
@@ -35,9 +36,9 @@ class PickedImage extends StatelessWidget {
           return Container(
             width: width,
             height: height,
-            color: Colors.grey.shade200,
+            color: AppColors.border,
             child: const Center(
-              child: Icon(Icons.broken_image_outlined, color: Colors.grey),
+              child: Icon(Icons.broken_image_outlined, color: AppColors.textGrey),
             ),
           );
         }
@@ -45,7 +46,7 @@ class PickedImage extends StatelessWidget {
           return Container(
             width: width,
             height: height,
-            color: Colors.grey.shade100,
+            color: AppColors.surfaceAlt,
             child: const Center(
               child: SizedBox(
                 width: 20,

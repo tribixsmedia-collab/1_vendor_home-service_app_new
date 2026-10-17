@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'package:flutter/services.dart';
 
 import '../services/api_service.dart';
@@ -123,7 +124,7 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${result['detail']}'),
-          backgroundColor: Colors.green.shade700,
+          backgroundColor: AppColors.success,
         ),
       );
     } catch (e) {
@@ -138,10 +139,10 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F8),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text('Payout Account'),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
       body: _isLoading
@@ -168,7 +169,7 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.account_balance, color: Colors.deepOrange),
+                const Icon(Icons.account_balance, color: AppColors.primary),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
@@ -196,9 +197,9 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
       if (!isVerified)
         _notice(
           icon: Icons.schedule,
-          background: const Color(0xFFFFF8E1),
-          border: const Color(0xFFFFE082),
-          iconColor: const Color(0xFFF57C00),
+          background: AppColors.accentSoft,
+          border: const Color(0xFFFDE68A),
+          iconColor: AppColors.accentDark,
           text: 'Our team is checking these details. Your earnings are safe '
               'in the meantime — verification only has to happen once.',
         ),
@@ -213,8 +214,8 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
         icon: const Icon(Icons.edit_outlined),
         label: const Text('Change payout account'),
         style: OutlinedButton.styleFrom(
-          foregroundColor: Colors.deepOrange,
-          side: const BorderSide(color: Colors.deepOrange),
+          foregroundColor: AppColors.primary,
+          side: const BorderSide(color: AppColors.primary),
           padding: const EdgeInsets.symmetric(vertical: 14),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -226,7 +227,7 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
         'Changing this means we check the new account before your next '
         'payout. If you did not make a change you see here, contact support.',
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+        style: TextStyle(fontSize: 12, color: AppColors.textGrey),
       ),
     ];
   }
@@ -236,7 +237,7 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: isVerified ? Colors.green.shade50 : Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(999),
         border: Border.all(
           color: isVerified ? Colors.green.shade200 : Colors.orange.shade200,
         ),
@@ -246,7 +247,7 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w600,
-          color: isVerified ? Colors.green.shade800 : Colors.orange.shade900,
+          color: isVerified ? Colors.green.shade800 : AppColors.accentDark,
         ),
       ),
     );
@@ -262,7 +263,7 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
             width: 120,
             child: Text(
               label,
-              style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 13, color: AppColors.textGrey),
             ),
           ),
           Expanded(
@@ -284,9 +285,9 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
     return [
       _notice(
         icon: Icons.lock_outline,
-        background: const Color(0xFFE8F0FE),
-        border: const Color(0xFFC6DAFC),
-        iconColor: const Color(0xFF1967D2),
+        background: const Color(0xFFF0FDFA),
+        border: const Color(0xFFCCFBF1),
+        iconColor: AppColors.info,
         text: isFirstTime
             ? 'Add the account where you want your earnings sent. We check '
                 'the details once before your first payout.'
@@ -402,8 +403,8 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
         const SizedBox(height: 12),
         _notice(
           icon: Icons.error_outline,
-          background: const Color(0xFFFDECEA),
-          border: const Color(0xFFF5C6CB),
+          background: const Color(0xFFFEF2F2),
+          border: const Color(0xFFFECACA),
           iconColor: Colors.red.shade700,
           text: _errorMessage!,
         ),
@@ -412,7 +413,7 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
       ElevatedButton(
         onPressed: _isSaving ? null : _save,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.deepOrange,
+          backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 15),
           shape: RoundedRectangleBorder(
@@ -483,8 +484,8 @@ class _BankAccountScreenState extends State<BankAccountScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFEDEDF2)),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.border),
       ),
       child: child,
     );

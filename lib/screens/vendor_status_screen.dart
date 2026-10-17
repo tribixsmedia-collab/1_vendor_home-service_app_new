@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import '../services/api_service.dart';
 import 'dashboard_screen.dart';
 
@@ -71,7 +72,7 @@ class _VendorStatusScreenState extends State<VendorStatusScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final accent = _isRejected ? Colors.red.shade700 : Colors.deepOrange;
+    final accent = _isRejected ? Colors.red.shade700 : AppColors.primary;
 
     return Scaffold(
       body: Container(
@@ -80,8 +81,8 @@ class _VendorStatusScreenState extends State<VendorStatusScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: isDark
-                ? [const Color(0xFF1A1A2E), const Color(0xFF16213E)]
-                : [const Color(0xFFFFF3E0), const Color(0xFFFFE0B2)],
+                ? [AppColors.primaryDark, AppColors.primaryMid]
+                : [AppColors.background, const Color(0xFFECFDF5)],
           ),
         ),
         child: SafeArea(
@@ -91,7 +92,7 @@ class _VendorStatusScreenState extends State<VendorStatusScreen> {
               child: Card(
                 elevation: 8,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(32),
@@ -122,7 +123,7 @@ class _VendorStatusScreenState extends State<VendorStatusScreen> {
                           _message,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.grey.shade600,
+                            color: AppColors.textGrey,
                             fontSize: 14,
                             height: 1.5,
                           ),
@@ -135,16 +136,16 @@ class _VendorStatusScreenState extends State<VendorStatusScreen> {
                           ),
                           decoration: BoxDecoration(
                             color: isDark
-                                ? Colors.grey.shade900
-                                : Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(10),
+                                ? AppColors.textDark
+                                : AppColors.surfaceAlt,
+                            borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
                             children: [
                               Icon(
                                 Icons.person_outline,
                                 size: 18,
-                                color: Colors.grey.shade600,
+                                color: AppColors.textGrey,
                               ),
                               const SizedBox(width: 8),
                               Expanded(
@@ -165,7 +166,7 @@ class _VendorStatusScreenState extends State<VendorStatusScreen> {
                             child: ElevatedButton.icon(
                               onPressed: _isChecking ? null : _checkAgain,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.deepOrange,
+                                backgroundColor: AppColors.primary,
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),

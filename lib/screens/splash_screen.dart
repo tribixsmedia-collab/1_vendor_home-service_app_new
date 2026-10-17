@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import '../services/api_service.dart';
 import '../services/branding_service.dart';
 import '../widgets/app_logo.dart';
@@ -87,14 +88,14 @@ class _SplashScreenState extends State<SplashScreen>
                     style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
-                      color: Colors.deepOrange.shade800,
+                      color: AppColors.primaryDark,
                       letterSpacing: 1,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     BrandingService.tagline ?? 'Your jobs, all in one place',
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                    style: TextStyle(fontSize: 14, color: AppColors.textGrey),
                   ),
                 ],
               ),

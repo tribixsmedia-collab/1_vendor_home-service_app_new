@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 import '../services/branding_service.dart';
 
@@ -59,10 +60,10 @@ class AppLogo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.deepOrange.withValues(alpha: 0.1),
+        color: AppColors.primary.withValues(alpha: 0.1),
         shape: BoxShape.circle,
       ),
-      child: Icon(Icons.engineering, size: size, color: Colors.deepOrange),
+      child: Icon(Icons.engineering, size: size, color: AppColors.primary),
     );
   }
 }

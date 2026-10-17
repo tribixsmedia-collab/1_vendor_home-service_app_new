@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import 'package:flutter/services.dart';
 
 /// Which way the thumb travels to confirm.
@@ -122,7 +123,7 @@ class _SlideActionState extends State<SlideAction>
   @override
   Widget build(BuildContext context) {
     final leftToRight = widget.direction == SlideDirection.leftToRight;
-    final tint = widget.enabled ? widget.color : Colors.grey;
+    final tint = widget.enabled ? widget.color : AppColors.textGrey;
 
     return LayoutBuilder(
       builder: (context, constraints) {

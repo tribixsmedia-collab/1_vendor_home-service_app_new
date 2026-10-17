@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import '../services/api_service.dart';
 import 'ticket_detail_screen.dart';
 
@@ -55,28 +56,28 @@ class _SupportScreenState extends State<SupportScreen> {
   static Color statusColor(String status) {
     switch (status) {
       case 'OPEN':
-        return Colors.orange.shade800;
+        return AppColors.accentDark;
       case 'IN_PROGRESS':
-        return Colors.blue.shade700;
+        return AppColors.info;
       case 'RESOLVED':
-        return Colors.green.shade700;
+        return AppColors.success;
       default:
-        return Colors.grey.shade600;
+        return AppColors.textGrey;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F8),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text('Help & Support'),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _openNewTicket,
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
         label: const Text('New Ticket'),
@@ -99,12 +100,12 @@ class _SupportScreenState extends State<SupportScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.grey),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.textGrey),
             const SizedBox(height: 12),
             Text(
               _errorMessage!,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.grey),
+              style: const TextStyle(color: AppColors.textGrey),
             ),
             const SizedBox(height: 16),
             ElevatedButton(onPressed: _loadTickets, child: const Text('Retry')),
@@ -120,19 +121,19 @@ class _SupportScreenState extends State<SupportScreen> {
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
         SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-        Icon(Icons.support_agent, size: 64, color: Colors.grey.shade300),
+        Icon(Icons.support_agent, size: 64, color: AppColors.border),
         const SizedBox(height: 12),
         const Center(
           child: Text(
             'No support tickets yet.',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: AppColors.textGrey),
           ),
         ),
         const SizedBox(height: 4),
         const Center(
           child: Text(
             'Stuck on a job or a payout? Tap "New Ticket".',
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: TextStyle(color: AppColors.textGrey, fontSize: 12),
           ),
         ),
       ],
@@ -156,11 +157,11 @@ class _SupportScreenState extends State<SupportScreen> {
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: const Color(0xFFEDEDF2)),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.border),
           ),
           child: InkWell(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(12),
             onTap: () async {
               await Navigator.of(context).push(
                 MaterialPageRoute(
@@ -216,8 +217,8 @@ class _SupportScreenState extends State<SupportScreen> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: hasSupportReply
-                            ? Colors.black87
-                            : Colors.grey.shade600,
+                            ? AppColors.textDark
+                            : AppColors.textGrey,
                         fontSize: 13,
                       ),
                     ),
@@ -228,7 +229,7 @@ class _SupportScreenState extends State<SupportScreen> {
                       Text(
                         '#${ticket['id']} · ${ticket['category_display'] ?? ''}',
                         style: TextStyle(
-                          color: Colors.grey.shade600,
+                          color: AppColors.textGrey,
                           fontSize: 11,
                         ),
                       ),
@@ -240,13 +241,13 @@ class _SupportScreenState extends State<SupportScreen> {
                             vertical: 3,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.deepOrange.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.primary.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Text(
                             'New reply',
                             style: TextStyle(
-                              color: Colors.deepOrange,
+                              color: AppColors.primary,
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                             ),
@@ -359,10 +360,10 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F8),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text('New Support Ticket'),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
       body: ListView(
@@ -418,7 +419,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
           ElevatedButton(
             onPressed: _isSubmitting ? null : _submit,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepOrange,
+              backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
@@ -440,7 +441,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
           Center(
             child: Text(
               'Support usually replies within one working day.',
-              style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+              style: TextStyle(color: AppColors.textGrey, fontSize: 12),
             ),
           ),
         ],

@@ -1,11 +1,11 @@
 {
-    "name": "vendor_app",
-    "short_name": "vendor_app",
+    "name": "RNI Services - Vendor",
+    "short_name": "RNI Vendor",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FFFFFF",
+    "theme_color": "#087F72",
+    "description": "Jobs, bids and earnings for RNI Services partners.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 import '../services/api_service.dart';
 import '../utils/legal_links.dart';
 import 'bank_account_screen.dart';
@@ -162,10 +163,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F8),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text('My Profile'),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
       body: _isLoading
@@ -235,7 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Text(
                       'Contact your admin to change any detail above.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                      style: TextStyle(color: AppColors.textGrey, fontSize: 12),
                     ),
                   ),
                 ],
@@ -251,12 +252,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.grey),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.textGrey),
             const SizedBox(height: 12),
             Text(
               _errorMessage!,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.grey),
+              style: const TextStyle(color: AppColors.textGrey),
             ),
             const SizedBox(height: 16),
             ElevatedButton(onPressed: _loadProfile, child: const Text('Retry')),
@@ -277,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             width: 64,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.deepOrange.withValues(alpha: 0.12),
+              color: AppColors.primary.withValues(alpha: 0.12),
             ),
             alignment: Alignment.center,
             child: Text(
@@ -285,7 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Colors.deepOrange,
+                color: AppColors.primary,
               ),
             ),
           ),
@@ -306,7 +307,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(height: 2),
                 Text(
                   'Vendor ID #${_profile?['id'] ?? '-'}',
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 12, color: AppColors.textGrey),
                 ),
                 const SizedBox(height: 8),
                 _verificationBadge(status),
@@ -325,7 +326,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     switch (status) {
       case 'VERIFIED':
-        color = Colors.green.shade700;
+        color = AppColors.success;
         icon = Icons.verified;
         label = 'Verified';
       case 'REJECTED':
@@ -333,7 +334,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         icon = Icons.gpp_bad_outlined;
         label = 'Not verified';
       default:
-        color = Colors.orange.shade800;
+        color = AppColors.accentDark;
         icon = Icons.pending_outlined;
         label = 'Pending review';
     }
@@ -342,7 +343,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -370,7 +371,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           Icon(
             isAvailable ? Icons.work_outline : Icons.work_off_outlined,
-            color: isAvailable ? Colors.green.shade700 : Colors.grey,
+            color: isAvailable ? AppColors.success : AppColors.textGrey,
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -386,7 +387,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   isAvailable
                       ? 'You can be assigned new jobs.'
                       : 'Turn this on when you are back on duty.',
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 12, color: AppColors.textGrey),
                 ),
               ],
             ),
@@ -400,7 +401,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           else
             Switch(
               value: isAvailable,
-              activeThumbColor: Colors.deepOrange,
+              activeThumbColor: AppColors.primary,
               onChanged: _toggleAvailability,
             ),
         ],
@@ -420,13 +421,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(height: 4),
           Text(
             'Jobs in these categories can be assigned to you.',
-            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 12, color: AppColors.textGrey),
           ),
           const SizedBox(height: 12),
           if (_categories.isEmpty)
             Text(
               'No categories assigned yet. Your admin sets these.',
-              style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 13, color: AppColors.textGrey),
             )
           else
             Wrap(
@@ -439,17 +440,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.deepOrange.withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(999),
                     border: Border.all(
-                      color: Colors.deepOrange.withValues(alpha: 0.25),
+                      color: AppColors.primary.withValues(alpha: 0.25),
                     ),
                   ),
                   child: Text(
                     '${c['name'] ?? ''}',
                     style: const TextStyle(
                       fontSize: 13,
-                      color: Colors.deepOrange,
+                      color: AppColors.primary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -491,8 +492,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         leading: Icon(
           plan == null ? Icons.workspace_premium_outlined : Icons.workspace_premium,
           color: plan == null
-              ? Colors.grey
-              : (expiringSoon ? Colors.orange : Colors.deepOrange),
+              ? AppColors.textGrey
+              : (expiringSoon ? Colors.orange : AppColors.primary),
         ),
         title: Row(
           children: [
@@ -506,14 +507,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                 decoration: BoxDecoration(
                   color: Colors.green.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
                   'Free',
                   style: TextStyle(
                     fontSize: 10.5,
                     fontWeight: FontWeight.w700,
-                    color: Colors.green.shade700,
+                    color: AppColors.success,
                   ),
                 ),
               ),
@@ -524,7 +525,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           subtitle,
           style: TextStyle(
             fontSize: 12,
-            color: expiringSoon ? Colors.orange.shade800 : Colors.grey.shade600,
+            color: expiringSoon ? AppColors.accentDark : AppColors.textGrey,
           ),
         ),
         trailing: const Icon(Icons.chevron_right),
@@ -550,7 +551,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         leading: Icon(
           _hasBankAccount ? Icons.account_balance : Icons.account_balance_outlined,
           color: _hasBankAccount
-              ? (isVerified ? Colors.green.shade700 : Colors.orange)
+              ? (isVerified ? AppColors.success : Colors.orange)
               : Colors.red.shade600,
         ),
         title: const Text(
@@ -565,7 +566,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   : '$masked — we are checking these details.',
           style: TextStyle(
             fontSize: 12,
-            color: _hasBankAccount ? Colors.grey.shade600 : Colors.red.shade600,
+            color: _hasBankAccount ? AppColors.textGrey : Colors.red.shade600,
           ),
         ),
         trailing: const Icon(Icons.chevron_right),
@@ -587,7 +588,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         leading: Icon(
           _hasWorkLocation ? Icons.location_on : Icons.location_off_outlined,
-          color: _hasWorkLocation ? Colors.green.shade700 : Colors.orange,
+          color: _hasWorkLocation ? AppColors.success : Colors.orange,
         ),
         title: const Text(
           'Work Location',
@@ -597,7 +598,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _hasWorkLocation
               ? 'Set — used to match you with nearby jobs.'
               : 'Not set. Tap to capture your GPS location.',
-          style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+          style: TextStyle(fontSize: 12, color: AppColors.textGrey),
         ),
         trailing: const Icon(Icons.chevron_right),
         onTap: () async {
@@ -616,14 +617,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: EdgeInsets.zero,
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        leading: const Icon(Icons.support_agent, color: Colors.deepOrange),
+        leading: const Icon(Icons.support_agent, color: AppColors.primary),
         title: const Text(
           'Help & Support',
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
         ),
         subtitle: Text(
           'Raise a ticket about a job, payout or your account.',
-          style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+          style: TextStyle(fontSize: 12, color: AppColors.textGrey),
         ),
         trailing: const Icon(Icons.chevron_right),
         onTap: () => Navigator.of(context).push(
@@ -670,7 +671,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _legalRow(IconData icon, String label, String url) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-      leading: Icon(icon, color: Colors.grey.shade700),
+      leading: Icon(icon, color: AppColors.textBody),
       title: Text(
         label,
         style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
@@ -718,8 +719,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: padding ?? const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFEDEDF2)),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.border),
       ),
       child: child,
     );
@@ -734,7 +735,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 18, color: Colors.grey.shade600),
+          Icon(icon, size: 18, color: AppColors.textGrey),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -742,7 +743,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Text(
                   label,
-                  style: TextStyle(fontSize: 11.5, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 11.5, color: AppColors.textGrey),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -752,7 +753,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                     fontSize: 14.5,
                     height: 1.3,
-                    color: isMissing ? Colors.grey : Colors.black87,
+                    color: isMissing ? AppColors.textGrey : AppColors.textDark,
                     fontStyle: isMissing ? FontStyle.italic : FontStyle.normal,
                   ),
                 ),

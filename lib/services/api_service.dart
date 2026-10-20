@@ -810,6 +810,78 @@ class ApiService {
     }
   }
 
+  // ---------- Assistant ----------
+  //
+  // The in-app assistant, sitting in front of Help & Support rather than
+  // beside it: it answers what it can from this vendor's own jobs, payouts
+  // and bids, and hands anything else to a real ticket.
+  //
+  // The same endpoints the customer app calls. Nothing here says which app is
+  // asking -- the server takes the audience from the token, which is also why
+  // a vendor gets the vendor answers and not the customer ones.
+
+  /// Everything the chat screen needs to open: whether the assistant is on,
+  /// its greeting, the starter chips, and the running conversation.
+  ///
+  /// A switched-off assistant comes back as `{'enabled': false}` rather than
+  /// an error, so the screen can say so plainly instead of looking broken.
+  static Future<Map<String, dynamic>> getAssistantSession() async {
+    final res = await _withAuth(
+      (headers) => http.get(
+        Uri.parse('$kApiBaseUrl/assistant/session/'),
+        headers: headers,
+      ),
+    );
+    if (res.statusCode == 200) return jsonDecode(res.body);
+    if (res.statusCode == 403) return {'enabled': false};
+    throw Exception('Could not open the assistant.');
+  }
+
+  /// Puts one question to the assistant.
+  ///
+  /// Returns the stored reply plus `suggestions` and `can_escalate`. A 429
+  /// means the daily limit was reached; its message is the server's own
+  /// wording, written for the vendor, so it is passed through rather than
+  /// replaced with ours.
+  static Future<Map<String, dynamic>> askAssistant(String question) async {
+    final body = jsonEncode({'question': question});
+    final res = await _withAuth(
+      (headers) => http.post(
+        Uri.parse('$kApiBaseUrl/assistant/ask/'),
+        headers: headers,
+        body: body,
+      ),
+    );
+    if (res.statusCode == 200) return jsonDecode(res.body);
+
+    try {
+      final error = jsonDecode(res.body);
+      if (error is Map && error['error'] is String) {
+        throw Exception(error['error']);
+      }
+    } catch (e) {
+      if (e is Exception) rethrow;
+    }
+    throw Exception('The assistant could not answer just now.');
+  }
+
+  /// Hands the running chat to the support team and returns the new ticket.
+  ///
+  /// Safe to call twice: the server answers the second call with the ticket
+  /// the first one opened rather than raising another.
+  static Future<Map<String, dynamic>> escalateAssistantChat() async {
+    final res = await _withAuth(
+      (headers) => http.post(
+        Uri.parse('$kApiBaseUrl/assistant/escalate/'),
+        headers: headers,
+      ),
+    );
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      return jsonDecode(res.body);
+    }
+    throw Exception('Could not pass this chat to support.');
+  }
+
   // ---------- Tenders (customer requirements to bid on) ----------
   //
   // Only tenders this vendor's categories cover come back from the server;

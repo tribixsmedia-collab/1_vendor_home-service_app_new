@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
 import '../services/api_service.dart';
+import 'assistant_screen.dart';
 import 'ticket_detail_screen.dart';
 
 /// The vendor's Help & Support inbox: every ticket they have raised, and the
@@ -82,14 +83,75 @@ class _SupportScreenState extends State<SupportScreen> {
         icon: const Icon(Icons.add),
         label: const Text('New Ticket'),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _errorMessage != null
-          ? _buildError()
-          : RefreshIndicator(
-              onRefresh: _loadTickets,
-              child: _tickets.isEmpty ? _buildEmpty() : _buildList(),
-            ),
+      body: Column(
+        children: [
+          _assistantCard(),
+          Expanded(
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : _errorMessage != null
+                ? _buildError()
+                : RefreshIndicator(
+                    onRefresh: _loadTickets,
+                    child: _tickets.isEmpty ? _buildEmpty() : _buildList(),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// The assistant, offered above the ticket list.
+  ///
+  /// Most of what reaches Support from a vendor is a question the assistant
+  /// can answer off their own rows -- "why am I not getting jobs", "when will
+  /// I be paid" -- and the first of those is a diagnostic no ticket should
+  /// have been needed for. Raising a ticket is still one tap away, and the
+  /// assistant opens one itself when it cannot help.
+  Widget _assistantCard() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14),
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const AssistantScreen()),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(colors: AppColors.brandGradient),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.chat_bubble_outline,
+                  color: Colors.white, size: 26),
+              const SizedBox(width: 14),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Ask the assistant',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      'Jobs, payouts, bids, and why work may not be reaching you.',
+                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.white70),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

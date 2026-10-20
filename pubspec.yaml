@@ -73,6 +73,7 @@ flutter:
 
   assets:
     - assets/logo.png
+    - assets/assistant_bot.png
 
   # Brand typefaces, matched to the RNI Realestate web identity and kept in
   # step with the customer app: Manrope for every UI/body string, Playfair

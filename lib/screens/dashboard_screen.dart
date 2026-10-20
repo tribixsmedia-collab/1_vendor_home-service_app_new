@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import '../utils/breakpoints.dart';
 
 import '../services/api_service.dart';
 import '../services/branding_service.dart';
@@ -379,25 +380,75 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ? _buildError()
           : RefreshIndicator(
               onRefresh: _load,
-              child: ListView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-                children: [
-                  _greetingCard(),
-                  ..._alerts(),
-                  const SizedBox(height: 16),
-                  _statRow(),
-                  const SizedBox(height: 16),
-                  _monthCard(),
-                  const SizedBox(height: 16),
-                  _todaySection(),
-                  const SizedBox(height: 16),
-                  _quickActions(),
-                ],
+              child: DesktopCentered(
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(
+                    isDesktopLayout(context) ? 24 : 16,
+                    16,
+                    isDesktopLayout(context) ? 24 : 16,
+                    32,
+                  ),
+                  children: isDesktopLayout(context)
+                      ? _desktopSections()
+                      : _phoneSections(),
+                ),
               ),
             ),
     );
   }
+
+  /// One column, in reading order. What every phone gets, and what the web
+  /// build falls back to in a narrow window.
+  List<Widget> _phoneSections() => [
+    _greetingCard(),
+    ..._alerts(),
+    const SizedBox(height: 16),
+    _statRow(),
+    const SizedBox(height: 16),
+    _monthCard(),
+    const SizedBox(height: 16),
+    _todaySection(),
+    const SizedBox(height: 16),
+    _quickActions(),
+  ];
+
+  /// The same sections, in two columns.
+  ///
+  /// Who the vendor is and anything demanding attention stay full width at the
+  /// top, because an alert pushed into a side column stops reading as urgent.
+  /// Below that the numbers sit on the left and the day's work on the right,
+  /// so a vendor opening this on a monitor sees today's jobs without
+  /// scrolling past the earnings.
+  List<Widget> _desktopSections() => [
+    _greetingCard(),
+    ..._alerts(),
+    const SizedBox(height: 20),
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [_statRow(), const SizedBox(height: 20), _monthCard()],
+          ),
+        ),
+        const SizedBox(width: 20),
+        Expanded(
+          flex: 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _todaySection(),
+              const SizedBox(height: 20),
+              _quickActions(),
+            ],
+          ),
+        ),
+      ],
+    ),
+  ];
 
   Widget _buildError() {
     return Center(
@@ -746,41 +797,56 @@ class _DashboardScreenState extends State<DashboardScreen> {
     VoidCallback? onTap,
   }) {
     final content = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+      padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: _border),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.textDark.withValues(alpha: 0.04),
+            blurRadius: 14,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: color.withValues(alpha: 0.10),
-            ),
-            child: Icon(icon, size: 18, color: color),
-          ),
-          const SizedBox(height: 10),
-          FittedBox(
-            child: Text(
-              value,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textDark,
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  color: color.withValues(alpha: 0.10),
+                ),
+                child: Icon(icon, size: 16, color: color),
               ),
-            ),
+              const SizedBox(width: 10),
+              Flexible(
+                child: FittedBox(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    value,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.6,
+                      color: AppColors.textDark,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 8),
           Text(
             label,
-            textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 11.5,
               height: 1.25,
               color: AppColors.textGrey,
             ),
@@ -794,7 +860,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
         onTap: onTap,
         child: content,
       ),
@@ -813,10 +879,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Row(
             children: [
-              const Text(
-                'This month',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-              ),
+              Text('This month', style: displayHeading(size: 17)),
               const Spacer(),
               Text(
                 '${_months[now.month - 1]} ${now.year}',
@@ -999,10 +1062,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Row(
             children: [
-              const Text(
-                "Today's schedule",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-              ),
+              Text("Today's schedule", style: displayHeading(size: 17)),
               const Spacer(),
               if (_activeJobs.isNotEmpty)
                 TextButton(
@@ -1036,10 +1096,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Expanded(
                   child: Text(
                     'Nothing scheduled for today.',
-                    style: TextStyle(
-                      fontSize: 13.5,
-                      color: AppColors.textGrey,
-                    ),
+                    style: TextStyle(fontSize: 13.5, color: AppColors.textGrey),
                   ),
                 ),
               ],
@@ -1164,11 +1221,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.chevron_right,
-                  size: 18,
-                  color: AppColors.textMuted,
-                ),
+                Icon(Icons.chevron_right, size: 18, color: AppColors.textMuted),
               ],
             ),
           ),
@@ -1183,10 +1236,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Quick actions',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-          ),
+          Text('Quick actions', style: displayHeading(size: 17)),
           const SizedBox(height: 14),
           Row(
             children: [
@@ -1282,11 +1332,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _card({required Widget child, EdgeInsets? padding}) {
     return Container(
       width: double.infinity,
-      padding: padding ?? const EdgeInsets.all(16),
+      padding: padding ?? const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: _border),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.textDark.withValues(alpha: 0.04),
+            blurRadius: 14,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: child,
     );

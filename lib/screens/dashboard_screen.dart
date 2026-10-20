@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import '../widgets/assistant_fab.dart';
 import '../utils/breakpoints.dart';
 
 import '../services/api_service.dart';
@@ -357,6 +358,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // The quiet-dashboard questions -- why no jobs, when am I paid --
+      // are the assistant's best ones, so it is offered here and not
+      // only from inside Help & Support.
+      floatingActionButton: const AssistantFab(),
       backgroundColor: _bg,
       appBar: AppBar(
         title: const Text('Dashboard'),
